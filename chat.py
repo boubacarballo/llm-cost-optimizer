@@ -9,7 +9,8 @@ class Response:
     
     def __init__(self, output_text: str, input_tokens: int, output_tokens: int, latency: float, cost: float, model_id: str):
         self.output_text = output_text
-        self.tokens_used = tokens_used
+        self.input_tokens = input_tokens
+        self.output_tokens = output_tokens
         self.latency = latency
         self.cost = cost
         self.model_id = model_id
@@ -47,7 +48,7 @@ class Chat:
             }
         )
         
-        match self.provider:
+        match provider:
             
             case "openai":
                 response = self.openai_client.responses.create(
@@ -55,10 +56,18 @@ class Chat:
                     messages=self.messages
                     )
                 
-                self.messages.append(response)
+                self.messages.append({
+                    "role": "assistant",
+                    "content": response.output_text
+                })
                 
                 return Response(
-                    
+                    output_text=response.output_text,
+                    input_tokens=0,
+                    output_tokens=0,
+                    latency=0,
+                    cost=0,
+                    model_id=model_id
                 )
             
             
