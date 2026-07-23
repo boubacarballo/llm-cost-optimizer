@@ -17,7 +17,7 @@ def send_request(prompt: str, model_config):
     
 if __name__ == "__main__":
     
-    while True:
+    while True: # each full loop corresponds to one session
         
         prompt = input("Please enter your prompt: ")
         
@@ -29,6 +29,16 @@ if __name__ == "__main__":
         
         provider = "openai"
         model = "gpt-5.6-terra"
+        model_config = {
+            "provider": provider,
+            "model": model,
+        }
+        
+        response = send_request(prompt, model_config)
+        
+        print(response["output_text"])
+        
+        
     
     
     
