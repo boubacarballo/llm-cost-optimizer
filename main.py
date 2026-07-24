@@ -38,6 +38,7 @@ if __name__ == "__main__":
         response = send_request(prompt, model_config)
         
         print(response.output_text)
+        print(response.latency)
         
         
     

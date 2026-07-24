@@ -4,6 +4,11 @@ import os
 from openai import OpenAI
 from anthropic import Anthropic
 load_dotenv()
+import time
+
+
+def get_request_latency(start_time):
+    return time.perf_counter() - start_time
 
 class Response:
     
@@ -49,6 +54,7 @@ class Chat:
                 "content": prompt
             }
         )
+        start_time = time.perf_counter()
         
         match provider:
             
@@ -58,17 +64,18 @@ class Chat:
                     model=model_id,
                     input=self.messages
                     )
-                
+                latency = get_request_latency(start_time)
                 self.messages.append({
                     "role": "assistant",
                     "content": response.output_text
                 })
+
                 
                 return Response(
                     output_text=response.output_text,
                     input_tokens=0,
                     output_tokens=0,
-                    latency=0,
+                    latency=latency,
                     cost=0,
                     model_id=model_id
                 )
@@ -82,6 +89,7 @@ class Chat:
                         messages=self.messages,
                         max_tokens=1024
                     )
+                latency = get_request_latency(start_time)
                     
                 self.messages.append({
                         "role": "assistant",
@@ -92,7 +100,7 @@ class Chat:
                         output_text=response.content[0].text,
                         input_tokens=response.usage.input_tokens,
                         output_tokens=response.usage.output_tokens,
-                        latency=0.0,
+                        latency=latency,
                         cost=1.0,
                         model_id=model_id
                     )
