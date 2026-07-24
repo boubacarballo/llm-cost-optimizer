@@ -23,17 +23,19 @@ class Chat:
     
     def __init__(self):
         # we check if the keys are present, we only initialize clients for the present keys
-        if os.getenv("ANTRHOPIC_API_KEY"):
+        if os.getenv("ANTHROPIC_API_KEY"):
+            print("loading anthropic")
             self.anthropic_api_key = os.getenv("ANTRHOPIC_API_KEY")
             self.anthropic_client = Anthropic(api_key=self.anthropic_api_key)
             
         if os.getenv("OPENAI_API_KEY"):
+            print("loading openai")
             self.openai_api_key = os.getenv("OPENAI_API_KEY")
             self.openai_client = OpenAI(api_key=self.openai_api_key)
             
         self.messages = [
             {
-                "role": "assistent",
+                "role": "assistant",
                 "content": "You are a helpful assistant"
             }
         ]
@@ -50,10 +52,11 @@ class Chat:
         
         match provider:
             
+            
             case "openai":
                 response = self.openai_client.responses.create(
                     model=model_id,
-                    messages=self.messages
+                    input=self.messages
                     )
                 
                 self.messages.append({
@@ -72,24 +75,28 @@ class Chat:
             
             
             case "anthropic":
+                
+                     
                 response = self.anthropic_client.messages.create(
-                    model=model_id,
-                    messages=self.messages
-                )
-                
+                        model=model_id,
+                        messages=self.messages,
+                        max_tokens=1024
+                    )
+                    
                 self.messages.append({
-                    "role": "assistant",
-                    "content": response.content[0].text
-                })
-                
+                        "role": "assistant",
+                        "content": response.content[0].text
+                    })
+                    
                 return Response(
-                    output_text=response.content[0].text,
-                    intput_tokens=response.usage.input_tokens,
-                    output_tokens=response.usage.output_tokens,
-                    latency=0.0,
-                    cost=1.0,
-                    model_id=model_id
-                )
+                        output_text=response.content[0].text,
+                        input_tokens=response.usage.input_tokens,
+                        output_tokens=response.usage.output_tokens,
+                        latency=0.0,
+                        cost=1.0,
+                        model_id=model_id
+                    )
+
                 
                 
                 
