@@ -1,4 +1,7 @@
 import os
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from pydantic import BaseModel
 import numpy as np
 import torch
 import torch.nn as nn
@@ -7,6 +10,9 @@ from huggingface_hub import PyTorchModelHubMixin
 from transformers import AutoModel, AutoTokenizer, PretrainedConfig
 
 load_dotenv()
+
+
+
 
 classifier = os.getenv("PROMPT_CLASSIFIER_MODEL")
 
@@ -139,29 +145,48 @@ class CustomModel(nn.Module, PyTorchModelHubMixin):
         return self.process_logits(logits)
 
 
-config = PretrainedConfig.from_pretrained(classifier)
-tokenizer = AutoTokenizer.from_pretrained(classifier)
 
-model = CustomModel(
-    target_sizes=config.target_sizes,
-    task_type_map=config.task_type_map,
-    weights_map=config.weights_map,
-    divisor_map=config.divisor_map,
-).from_pretrained(classifier)
-model.eval()
 
-prompt = ["Generate me a full analysis report on Chernobyl"]
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    config = PretrainedConfig.from_pretrained(classifier)
+    global tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(classifier)
+    global model
+    model = CustomModel(
+        target_sizes=config.target_sizes,
+        task_type_map=config.task_type_map,
+        weights_map=config.weights_map,
+        divisor_map=config.divisor_map,
+    ).from_pretrained(classifier)
+    model.eval()
+    
+    yield
+    
+    
+app = FastAPI(lifespan=lifespan)
 
-encoded_prompt = tokenizer(
-    prompt,
-    return_tensors="pt",
-    add_special_tokens=True,
-    max_length=512,
-    padding="max_length",
-    truncation=True,
-)
 
-with torch.no_grad():
-    result = model(encoded_prompt)
+class PromptRequest(BaseModel):
+    prompt: str
+    
+@app.get("/home")
+def home():
+    return {"message": "Hello World"}
+    
+@app.post("/classify")
+def classify(req: PromptRequest):
 
-print(result)
+    encoded_prompt = tokenizer(
+        req.prompt,
+        return_tensors="pt",
+        add_special_tokens=True,
+        max_length=512,
+        padding="max_length",
+        truncation=True,
+    )
+
+    with torch.no_grad():
+        result = model(encoded_prompt)
+
+    return result
