@@ -20,9 +20,104 @@ ANTHROPIC_MODELS = (
     "claude-fable-5",
     "claude-mythos-5",
 )
+TIER_1_TASKS = (
+    "Extraction",
+    "Closed QA",
+    "Text Generation",
+    "Open QA",
+)
+
+TIER_2_TASKS = (
+    "Summarization",
+    "Classification",
+)
+
+TIER_3_TASKS = (
+    "Code Generation",
+    "Chatbot",
+    "Rewrite",
+    "Brainstorming",
+    "Other",
+)
+import yaml
 
 
-
-def get_prompt_complexity(result):
+def breakdown_results(result):
     
-    pass
+    try:
+        task_types = result["task_type_1"] + result["task_type_2"]
+        tier_flags = [0, 0, 0]
+        contextual_knowledge = result["contextual_knowledge"][0]
+        prompt_complexity = result["prompt_complexity_score"][0]
+        
+        
+        for task in task_types:
+            if task in TIER_1_TASKS:
+                tier_flags[0] = 1
+            elif task in TIER_2_TASKS:
+                tier_flags[1] = 1
+            elif task in TIER_3_TASKS:
+                tier_flags[2] = 1
+                
+        return tier_flags, contextual_knowledge, prompt_complexity
+    
+    except Exception as exc:
+        raise f"Error breaking down classifier results: {exc}"
+
+
+
+def load_models_configs(path):
+    
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+                config = yaml.safe_load(f)
+                
+        return config
+        
+    except FileNotFoundError as err:
+        print(f"File not found or invalid path: {err}")
+        
+
+def get_candidate_models(flags, config):
+    try:
+        if flags[0]:
+            return config.get("tiers", {}).get("tier_1", [])
+        
+        elif flags[1]:
+            return config.get("tiers", {}).get("tier_2", [])
+        
+        elif flags[2]:
+            return config.get("tiers", {}).get("tier_2", [])
+    except Exception as exc:
+        raise f"Error loading candidate models: {exc}"
+    
+def select_model_and_provider(models, context_window):
+    # take the cheapest that satisfies the context window
+    try:
+        models = sorted(
+        models,
+        key=lambda m: (
+            m["context_window"],
+            m["pricing_per_million_tokens"]["input"] + m["pricing_per_million_tokens"]["output"]
+        )
+        )
+        
+        for model in models:
+            if model["context_window"] > context_window:
+                data = {
+                        "provider": "",
+                        "model_id": model["id"]
+                    }
+                if model["id"] in OPENAI_MODELS:
+                    data["provider"] = "openai"
+                    
+                elif model["id"] in ANTHROPIC_MODELS:
+                    data["provider"] = "anthropic"
+                    
+                return data
+    except Exception as exc:
+        raise f"Something went wrong selecting model and provider: {exc}"
+    
+        
+    
+        
