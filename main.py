@@ -1,4 +1,5 @@
 from chat import Chat
+from utils import load_models_configs, breakdown_results, get_candidate_models, select_model_and_provider
 import sys
 import requests
 import os
@@ -19,9 +20,15 @@ def send_request(prompt: str, model_config):
 if __name__ == "__main__":
     
     prompt_classifier_url = os.getenv("PROMPT_CLASSIFIER_SERVER_URL")
+    model_configs_path = os.getenv("MODEL_CONFIGS_PATH")
     
     if not prompt_classifier_url:
         raise "Unable to ge prompt classifier URL"
+    
+    if not model_configs_path:
+        raise "Unable to load model configurations"
+    
+    config = load_models_configs(model_configs_path)
     
     while True: # each full loop corresponds to one session
         
@@ -43,17 +50,37 @@ if __name__ == "__main__":
         )
         
         result = response.json()
+        print(f"result: {result}")
         
-        print(result)
+        tier_flags, contextual_knowledge, complexity = breakdown_results(result)
+        print(f"tier flags {tier_flags}")
         
-        exit(1)
+        candidate_models = get_candidate_models(tier_flags, config)
+        print(f"candidates: {candidate_models}")
         
-        provider = "anthropic"
-        model = "claude-haiku-4-5-20251001"
-        model_config = {
-            "provider": provider,
-            "model_id": model,
-        }
+        model_config = select_model_and_provider(candidate_models, context_window=12700)
+        
+        
+        
+        
+        
+        
+        
+        print(model_config)
+        # use the tier to choose model
+        # use the chat current contecxt window to narrow down which model to pick
+        
+        
+        
+        
+        # exit(1)
+        
+        # provider = "anthropic"
+        # model = "claude-haiku-4-5-20251001"
+        # model_config = {
+        #     "provider": provider,
+        #     "model_id": model,
+        # }
         
         response = send_request(prompt, model_config)
         
