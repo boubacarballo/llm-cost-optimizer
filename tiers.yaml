@@ -30,16 +30,6 @@ tiers:
       max_output_tokens: null
       best_for: "legacy/cheapest option still live; same use cases as 5.4-nano at lower cost"
 
-    - id: gpt-5-mini
-      provider: openai
-      pricing_per_million_tokens:
-        input: null              # not officially reconfirmed for current pricing page
-        output: null
-      reasoning_model: true
-      context_window: 400000
-      max_output_tokens: null
-      best_for: "legacy mid-cheap tier; verify current pricing before relying on this"
-
     - id: claude-haiku-4-5-20251001
       provider: anthropic
       pricing_per_million_tokens:
@@ -163,13 +153,3 @@ tiers:
       context_window: 1000000
       max_output_tokens: null
       best_for: "long-running agents, hardest coding/knowledge work; falls back to Opus 4.8 on some flagged bio/cyber requests"
-
-    - id: claude-mythos-5
-      provider: anthropic
-      pricing_per_million_tokens:
-        input: null              # invite-only, not publicly priced
-        output: null
-      reasoning_model: true
-      context_window: 1000000
-      max_output_tokens: null
-      best_for: "invite-only via Project Glasswing; not available on standard API keys"
