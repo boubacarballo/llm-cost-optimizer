@@ -8,4 +8,6 @@ dependencies = [
     "anthropic>=0.118.0",
     "openai>=2.47.0",
     "python-dotenv>=1.2.2",
+    "torch>=2.13.0",
+    "transformers>=5.14.1",
 ]
