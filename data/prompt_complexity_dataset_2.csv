@@ -1,0 +1,501 @@
+prompt_text,token_count,complexity_terms,turn_type,context_provided,context_window,task_type,tier
+Help me think through the tradeoffs of switching careers into data science,18,False,one_shot,True,32000,Other,2
+Help a nonprofit decide between two vendors for a new CRM system,15,False,multi_turn,True,16000,Other,3
+Sort these transactions into expense categories: the attached report,13,False,one_shot,True,4096,Classification,2
+Summarize the key takeaways from this contract,11,True,one_shot,True,8192,Summarization,2
+Help me think through the tradeoffs of switching careers into data science,19,False,multi_turn,False,0,Other,3
+Extract the names of people mentioned in the survey responses,14,False,one_shot,True,8192,Extraction,1
+Why do people find space exploration so polarizing?,14,False,multi_turn,False,0,Open QA,1
+Write a short toast for a wedding,9,False,multi_turn,False,0,Text Generation,1
+Generate a catchy name for a podcast about machine learning,16,False,multi_turn,True,8192,Text Generation,1
+Generate ideas for reducing churn at a healthcare provider,14,False,one_shot,False,0,Brainstorming,2
+Generate a tagline for a coffee shop,10,False,multi_turn,False,0,Text Generation,1
+Translate this paragraph into German: the pasted transcript,11,False,one_shot,True,16000,Rewrite,3
+Why do people procrastinate?,8,False,multi_turn,False,0,Open QA,1
+How does exercise affect mood?,8,False,one_shot,False,0,Open QA,1
+Help me think through the tradeoffs of switching careers into data science,19,False,multi_turn,True,32000,Other,3
+Rewrite this email to sound more formal: the attached report,16,False,one_shot,True,128000,Rewrite,3
+Pull the total amount due from the customer feedback log,14,False,one_shot,True,2048,Extraction,1
+"Classify these 5 support tickets as billing, technical, or account issues: the attached report",21,False,one_shot,True,8192,Classification,2
+Come up with 12 creative team-building activity ideas,12,False,one_shot,False,0,Brainstorming,2
+What's the capital of France?,7,False,multi_turn,False,0,Closed QA,1
+Convert this passive-voice paragraph into active voice: this text block,15,False,multi_turn,True,32000,Rewrite,3
+Tag each sentence in the customer feedback log with its sentiment,17,False,one_shot,True,16000,Classification,2
+Give me a one-paragraph summary of the shared Google Doc,14,False,multi_turn,True,8192,Summarization,3
+Extract the names of people mentioned in the email thread below,17,False,multi_turn,True,2048,Extraction,2
+Sort these 20 resumes into 'interview' or 'reject' piles: this contract,16,False,one_shot,True,32000,Classification,2
+Why is the sky blue?,7,False,one_shot,True,4096,Open QA,1
+"Classify these 3 support tickets as billing, technical, or account issues: the pasted transcript",21,False,one_shot,True,16000,Classification,2
+How many days are in a leap year?,12,False,one_shot,False,0,Closed QA,1
+Generate ideas for reducing churn at a nonprofit,10,False,one_shot,False,0,Brainstorming,3
+Write a short out-of-office auto-reply message,10,False,one_shot,False,0,Text Generation,1
+"Continuing from before, can you help me refine the plan we outlined?",19,False,one_shot,False,0,Chatbot,3
+"Going back to what Jordan suggested earlier, can we explore that option further?",20,False,multi_turn,False,0,Chatbot,3
+What makes a good leader?,9,False,one_shot,False,0,Open QA,1
+"Going back to what Maria suggested earlier, can we explore that option further?",19,False,multi_turn,False,0,Chatbot,3
+What is the square root of 144?,8,False,one_shot,False,0,Closed QA,1
+"Debug this code snippet, it throws a null pointer exception: the meeting notes",20,False,multi_turn,True,200000,Code Generation,3
+We've been chatting about my trip to Japan — can you now help me build a full itinerary based on everything I've told you?,31,False,one_shot,False,0,Chatbot,3
+Generate a catchy name for a podcast about space exploration,14,False,one_shot,False,0,Text Generation,1
+Let's keep going — what should the next step in our plan be?,18,False,one_shot,False,0,Chatbot,2
+"Plan a full 3-day trip itinerary for Kyoto including food, culture, and budget considerations",20,False,multi_turn,False,0,Other,3
+Categorize these emails as spam or not spam: the pasted transcript,14,False,one_shot,True,8192,Classification,2
+Walk me through how to negotiate a higher starting salary for a new job offer,21,False,multi_turn,True,128000,Other,3
+Tag each ticket in the uploaded spreadsheet by urgency level,14,False,multi_turn,True,16000,Classification,3
+Give me a TL;DR of this contract,8,False,one_shot,True,8192,Summarization,2
+Provide an executive summary of this text block,11,False,one_shot,True,32000,Summarization,3
+What causes inflation?,4,False,multi_turn,False,0,Open QA,1
+What is the square root of 144?,8,False,multi_turn,True,2048,Closed QA,2
+Simplify this paragraph for a 5th-grade reading level: the customer feedback log,17,False,multi_turn,True,200000,Rewrite,3
+Categorize these emails as spam or not spam: the attached report,14,False,one_shot,True,4096,Classification,2
+Summarize the key takeaways from this contract,10,True,one_shot,True,32000,Summarization,2
+Give me 8 name ideas for a new fitness app,11,False,one_shot,False,0,Brainstorming,2
+"Following up on my last message, can you go deeper into the second point?",20,False,multi_turn,True,32000,Chatbot,3
+What's the capital of France?,8,False,multi_turn,True,8192,Closed QA,2
+Write a recursive function to compute Fibonacci numbers in Java,15,False,one_shot,False,0,Code Generation,3
+Brainstorm 20 icebreaker questions for a remote team offsite,15,False,one_shot,False,0,Brainstorming,3
+Summarise the main arguments made in the attached report about supply chain logistics,21,True,multi_turn,True,32000,Summarization,3
+Write a Java function that merges two sorted linked lists,16,False,multi_turn,True,128000,Code Generation,3
+List the company names referenced in this contract,12,False,multi_turn,True,2048,Extraction,2
+"Following up on my last message, can you go deeper into the second point?",19,False,multi_turn,False,0,Chatbot,3
+Who wrote Romeo and Juliet?,7,False,multi_turn,False,0,Closed QA,1
+Sort these 20 resumes into 'interview' or 'reject' piles: the shared Google Doc,20,False,one_shot,True,32000,Classification,2
+Implement a binary search function in SQL,9,False,one_shot,False,0,Code Generation,3
+Condense the survey responses into a short abstract,13,False,one_shot,True,8192,Summarization,2
+Why do people procrastinate?,5,False,one_shot,False,0,Open QA,1
+Implement a binary search function in Go,9,False,one_shot,True,200000,Code Generation,3
+Give me a TL;DR of the customer feedback log,12,False,multi_turn,True,16000,Summarization,2
+Summarise the survey responses for someone with no background knowledge,14,True,multi_turn,True,16000,Summarization,2
+Extract the 15 action items from the attached report,14,False,one_shot,True,8192,Extraction,1
+Design a study plan for the next 6 weeks to prepare for the GRE,17,False,multi_turn,False,0,Other,3
+Rewrite this product description to sound more persuasive: the customer feedback log,17,False,one_shot,True,16000,Rewrite,3
+Help a SaaS startup decide between two vendors for a new CRM system,16,False,multi_turn,False,0,Other,3
+Draft a decision framework for choosing between three job offers,13,False,multi_turn,True,128000,Other,2
+Give me a TL;DR of the pasted transcript,11,False,one_shot,True,32000,Summarization,2
+Write a SQL query to find the top 10 customers by revenue,17,False,multi_turn,False,0,Code Generation,3
+Draft a decision framework for choosing between three job offers,16,False,one_shot,False,0,Other,3
+Tag each sentence in the uploaded spreadsheet with its sentiment,14,False,multi_turn,True,4096,Classification,2
+Convert this passive-voice paragraph into active voice: this article,14,False,one_shot,True,16000,Rewrite,3
+Write unit tests in SQL for the pasted transcript,11,False,one_shot,True,200000,Code Generation,3
+Help me structure a 45-minute conference talk about the French Revolution,18,False,multi_turn,False,0,Other,3
+Write a haiku about autumn leaves,10,False,multi_turn,True,8192,Text Generation,1
+Refactor this function to improve readability: this contract,14,False,one_shot,True,100000,Code Generation,3
+Generate a catchy name for a podcast about quantum computing,15,False,one_shot,True,8192,Text Generation,1
+Write a recursive function to compute Fibonacci numbers in Go,15,False,one_shot,False,0,Code Generation,3
+Rewrite this product description to sound more persuasive: the pasted transcript,19,False,one_shot,True,100000,Rewrite,3
+Generate a tagline for a coffee shop,9,False,one_shot,False,0,Text Generation,1
+"Label each of these reviews as positive, negative, or neutral: the attached report",20,False,one_shot,True,32000,Classification,2
+Why do people find the housing market so polarizing?,11,False,one_shot,True,8192,Open QA,1
+What makes a good leader?,7,False,one_shot,False,0,Open QA,1
+Rewrite this product description to sound more persuasive: this document,16,False,multi_turn,True,200000,Rewrite,3
+Help a fintech company decide between two vendors for a new CRM system,17,False,one_shot,False,0,Other,3
+Condense this contract into a short abstract,9,False,one_shot,True,8192,Summarization,2
+What makes a good leader?,5,False,one_shot,False,0,Open QA,1
+Provide an executive summary of the attached report,10,False,one_shot,True,16000,Summarization,2
+"Based on the survey responses, what date was the meeting scheduled for?",17,False,one_shot,True,2048,Closed QA,1
+"Label each of these reviews as positive, negative, or neutral: this article",17,False,one_shot,True,16000,Classification,2
+"Plan a full 3-day trip itinerary for Kyoto including food, culture, and budget considerations",23,False,multi_turn,False,0,Other,3
+"Label each of these reviews as positive, negative, or neutral: the uploaded spreadsheet",21,False,one_shot,True,16000,Classification,2
+Help me think through the tradeoffs of switching careers into data science,16,False,multi_turn,False,0,Other,3
+Write a haiku about autumn leaves,9,False,one_shot,False,0,Text Generation,1
+Generate a catchy name for a podcast about the stock market,17,False,one_shot,True,4096,Text Generation,1
+Put together a 90-day onboarding plan for a new hire at a fintech company,18,False,multi_turn,False,0,Other,3
+Rewrite this email to sound more formal: this dataset,14,False,one_shot,True,32000,Rewrite,3
+Pull the total amount due from the attached report,14,False,one_shot,True,4096,Extraction,1
+Draft a decision framework for choosing between three job offers,13,False,multi_turn,False,0,Other,3
+Write a two-line caption for a sunset photo,12,False,one_shot,False,0,Text Generation,1
+What year did World War II end?,8,False,one_shot,False,0,Closed QA,1
+Help me think through the tradeoffs of switching careers into data science,16,False,multi_turn,False,0,Other,3
+Tag each sentence in the pasted transcript with its sentiment,17,False,multi_turn,True,32000,Classification,2
+Write a haiku about autumn leaves,8,False,one_shot,False,0,Text Generation,1
+Translate this paragraph into German: the customer feedback log,14,False,one_shot,True,100000,Rewrite,3
+"Going back to what Priya suggested earlier, can we explore that option further?",20,False,multi_turn,False,0,Chatbot,3
+"Label each of these reviews as positive, negative, or neutral: this document",18,False,one_shot,True,16000,Classification,2
+Sort these 15 resumes into 'interview' or 'reject' piles: the customer feedback log,17,False,one_shot,True,32000,Classification,2
+Draft a decision framework for choosing between three job offers,15,False,multi_turn,False,0,Other,3
+Why do people procrastinate?,6,False,one_shot,True,8192,Open QA,1
+"Based on our conversation so far, summarise the options we've considered and pick the best one",24,True,multi_turn,True,100000,Chatbot,3
+Design a study plan for the next 6 weeks to prepare for the GRE,17,False,multi_turn,False,0,Other,3
+Write a short out-of-office auto-reply message,9,False,one_shot,False,0,Text Generation,1
+Let's keep going — what should the next step in our plan be?,16,False,multi_turn,True,32000,Chatbot,3
+Summarize the key takeaways from the customer feedback log,12,True,one_shot,True,8192,Summarization,2
+Generate ideas for reducing churn at a SaaS startup,11,False,one_shot,False,0,Brainstorming,3
+Give me a TL;DR of this contract,9,False,one_shot,True,32000,Summarization,2
+Write a one-line joke about programmers,8,False,one_shot,False,0,Text Generation,1
+Write a haiku about autumn leaves,11,False,multi_turn,True,4096,Text Generation,1
+We've been chatting about my trip to Japan — can you now help me build a full itinerary based on everything I've told you?,30,False,multi_turn,True,128000,Chatbot,2
+Implement a binary search function in Go,9,False,one_shot,False,0,Code Generation,2
+Convert this passive-voice paragraph into active voice: the pasted transcript,17,False,multi_turn,True,32000,Rewrite,3
+Pull out all the email addresses from the attached report,13,False,one_shot,True,8192,Extraction,1
+Brainstorm blog post topics for a newsletter about urban planning,15,False,multi_turn,False,0,Brainstorming,3
+"Plan a full 3-day trip itinerary for Kyoto including food, culture, and budget considerations",22,False,one_shot,False,0,Other,3
+Let's keep going — what should the next step in our plan be?,16,False,multi_turn,False,0,Chatbot,3
+Generate a catchy name for a podcast about cryptocurrency,12,False,one_shot,False,0,Text Generation,1
+Provide an executive summary of the email thread below,15,False,one_shot,True,32000,Summarization,2
+Categorize these emails as spam or not spam: this dataset,13,False,multi_turn,True,8192,Classification,2
+Give me a one-paragraph summary of the pasted transcript,14,False,one_shot,True,16000,Summarization,2
+Write a short birthday message for my coworker Wei,11,False,one_shot,False,0,Text Generation,1
+Walk me through how to negotiate a higher starting salary for a new job offer,21,False,multi_turn,False,0,Other,3
+Pull out all the email addresses from this dataset,12,False,multi_turn,True,4096,Extraction,1
+"Following up on my last message, can you go deeper into the second point?",19,False,one_shot,False,0,Chatbot,2
+Tag each sentence in this text block with its sentiment,13,False,one_shot,True,4096,Classification,2
+What do you think causes economic recessions in general?,12,False,one_shot,False,0,Open QA,1
+"Continuing from before, can you help me refine the plan we outlined?",18,False,multi_turn,False,0,Chatbot,3
+Rewrite this paragraph to be more concise: the uploaded spreadsheet,15,False,one_shot,True,200000,Rewrite,3
+Write a two-line caption for a sunset photo,11,False,multi_turn,False,0,Text Generation,2
+"According to the attached report, what was the reported revenue?",17,False,multi_turn,True,8192,Closed QA,1
+Refactor this function to improve readability: the survey responses,15,False,multi_turn,True,128000,Code Generation,3
+What do you think causes economic recessions in general?,12,False,one_shot,False,0,Open QA,1
+What's the capital of France?,8,False,one_shot,False,0,Closed QA,1
+What do you think causes economic recessions in general?,14,False,one_shot,False,0,Open QA,1
+What's the best way to learn Mandarin?,8,False,one_shot,False,0,Open QA,1
+Help a fintech company decide between two vendors for a new CRM system,19,False,multi_turn,False,0,Other,3
+Generate a catchy name for a podcast about the water cycle,13,False,one_shot,False,0,Text Generation,1
+"Label each of these reviews as positive, negative, or neutral: the email thread below",20,False,multi_turn,True,8192,Classification,2
+Extract the phone numbers from the email thread below,12,False,one_shot,True,4096,Extraction,1
+Sort these transactions into expense categories: the customer feedback log,16,False,multi_turn,True,16000,Classification,3
+Write a short birthday message for my coworker Maria,12,False,one_shot,False,0,Text Generation,1
+Draft a decision framework for choosing between three job offers,17,False,multi_turn,False,0,Other,3
+"Plan a full 3-day trip itinerary for Kyoto including food, culture, and budget considerations",21,False,one_shot,False,0,Other,3
+Put together a 90-day onboarding plan for a new hire at a SaaS startup,19,False,multi_turn,False,0,Other,3
+Write a haiku about autumn leaves,10,False,one_shot,False,0,Text Generation,1
+Why is the sky blue?,4,False,one_shot,False,0,Open QA,1
+"Going back to what Chris suggested earlier, can we explore that option further?",21,False,one_shot,False,0,Chatbot,3
+List all the product names found in the meeting notes,14,False,one_shot,True,2048,Extraction,1
+Draft a decision framework for choosing between three job offers,16,False,multi_turn,False,0,Other,3
+Write a recursive function to compute Fibonacci numbers in Rust,16,False,one_shot,True,200000,Code Generation,3
+Brainstorm blog post topics for a newsletter about quantum computing,14,False,one_shot,False,0,Brainstorming,2
+Sort these transactions into expense categories: the pasted transcript,15,False,one_shot,True,4096,Classification,2
+Generate ideas for reducing churn at a nonprofit,10,False,one_shot,False,0,Brainstorming,2
+Write a haiku about autumn leaves,9,False,multi_turn,True,8192,Text Generation,1
+How many continents are there?,9,False,multi_turn,False,0,Closed QA,1
+Compose a short thank-you note for a gift from Sam,14,False,multi_turn,False,0,Text Generation,1
+Why do cats purr?,4,False,multi_turn,False,0,Open QA,1
+What year was behavioral economics first widely studied?,14,False,multi_turn,False,0,Closed QA,1
+Come up with alternative names for our product currently called Project Falcon,19,False,one_shot,False,0,Brainstorming,3
+Help a SaaS startup decide between two vendors for a new CRM system,18,False,multi_turn,False,0,Other,3
+Let's keep going — what should the next step in our plan be?,18,False,one_shot,False,0,Chatbot,3
+Tag each ticket in the email thread below by urgency level,13,False,one_shot,True,16000,Classification,2
+Extract the names of people mentioned in the pasted transcript,16,False,multi_turn,True,2048,Extraction,1
+Help a nonprofit decide between two vendors for a new CRM system,17,False,multi_turn,False,0,Other,3
+Simplify this paragraph for a 5th-grade reading level: the pasted code file,18,False,one_shot,True,100000,Rewrite,3
+Give me 8 name ideas for a new fitness app,11,False,one_shot,False,0,Brainstorming,2
+"Debug this code snippet, it throws a null pointer exception: the uploaded spreadsheet",18,False,one_shot,True,32000,Code Generation,3
+"Brainstorm 20 unconventional marketing angles for a B2B SaaS product, then group them by theme",22,False,one_shot,False,0,Brainstorming,3
+"Based on this text block, what date was the meeting scheduled for?",17,False,one_shot,True,4096,Closed QA,1
+"Given everything we discussed earlier, what would you recommend I do next?",17,False,multi_turn,False,0,Chatbot,3
+Extract all the SKU numbers from the customer feedback log,15,False,multi_turn,True,8192,Extraction,1
+Implement a binary search function in C++,9,False,multi_turn,False,0,Code Generation,3
+Rewrite this email to sound more formal: the uploaded spreadsheet,16,False,one_shot,True,100000,Rewrite,3
+Help a manufacturing firm decide between two vendors for a new CRM system,20,False,multi_turn,False,0,Other,3
+Let's keep going — what should the next step in our plan be?,16,False,multi_turn,False,0,Chatbot,3
+Simplify this paragraph for a 5th-grade reading level: this log file,16,False,one_shot,True,32000,Rewrite,3
+What makes a good leader?,8,False,one_shot,False,0,Open QA,1
+Create a REST API endpoint in SQL for user login,13,False,one_shot,False,0,Code Generation,2
+Get all the postal addresses from the meeting notes,14,False,one_shot,True,8192,Extraction,1
+Sort these transactions into expense categories: the uploaded spreadsheet,16,False,one_shot,True,8192,Classification,2
+Optimize this Rust function for performance: the shared Google Doc,15,True,one_shot,True,128000,Code Generation,3
+Summarize the key takeaways from this contract,12,True,one_shot,True,4096,Summarization,2
+How does exercise affect mood?,9,False,one_shot,False,0,Open QA,1
+Simplify this paragraph for a 5th-grade reading level: this log file,18,False,one_shot,True,16000,Rewrite,3
+Summarise the main arguments made in this PDF about space exploration,18,True,one_shot,True,8192,Summarization,2
+Sort these 3 resumes into 'interview' or 'reject' piles: this document,16,False,multi_turn,True,4096,Classification,2
+Design a study plan for the next 6 weeks to prepare for the GRE,18,False,multi_turn,True,100000,Other,3
+Extract the names of people mentioned in this PDF,12,False,one_shot,True,2048,Extraction,1
+Categorize these emails as spam or not spam: the customer feedback log,17,False,one_shot,True,32000,Classification,2
+Write a short birthday message for my coworker Sam,13,False,multi_turn,False,0,Text Generation,1
+"Plan a full 3-day trip itinerary for Kyoto including food, culture, and budget considerations",20,False,multi_turn,True,100000,Other,3
+Summarise the shared Google Doc for someone with no background knowledge,16,True,multi_turn,True,4096,Summarization,2
+Extract the names of people mentioned in this text block,16,False,one_shot,True,2048,Extraction,1
+Summarize the key takeaways from the attached report,10,True,one_shot,True,32000,Summarization,2
+Implement a binary search function in TypeScript,10,False,one_shot,True,32000,Code Generation,3
+How many continents are there?,7,False,one_shot,True,4096,Closed QA,1
+Compose a short thank-you note for a gift from Maria,12,False,one_shot,False,0,Text Generation,1
+Write a short birthday message for my coworker Jordan,14,False,one_shot,False,0,Text Generation,1
+Write a two-sentence product description for a water bottle,13,False,multi_turn,False,0,Text Generation,1
+"Label each of these reviews as positive, negative, or neutral: the attached report",18,False,one_shot,True,32000,Classification,2
+Compose a short thank-you note for a gift from Fatima,13,False,one_shot,False,0,Text Generation,1
+Why do people find space exploration so polarizing?,10,False,one_shot,True,2048,Open QA,1
+Get all the URLs mentioned in the attached report,13,False,one_shot,True,4096,Extraction,1
+Extract the phone numbers from the survey responses,13,False,multi_turn,True,2048,Extraction,2
+Write a short out-of-office auto-reply message,9,False,one_shot,False,0,Text Generation,1
+Extract the names of people mentioned in the email thread below,17,False,one_shot,True,8192,Extraction,1
+Rewrite this product description to sound more persuasive: this document,17,False,one_shot,True,32000,Rewrite,3
+Put together a 90-day onboarding plan for a new hire at a fintech company,21,False,multi_turn,False,0,Other,3
+Optimize this Java function for performance: the attached report,13,True,one_shot,True,16000,Code Generation,3
+Write a haiku about autumn leaves,10,False,one_shot,False,0,Text Generation,1
+Pull the total amount due from the shared Google Doc,15,False,one_shot,True,2048,Extraction,1
+Come up with 15 creative team-building activity ideas,14,False,one_shot,True,32000,Brainstorming,3
+"According to this document, what was the reported revenue?",13,False,one_shot,True,2048,Closed QA,1
+Write unit tests in Rust for the customer feedback log,12,False,one_shot,True,128000,Code Generation,3
+Write a SQL query to find the top 10 customers by revenue,15,False,multi_turn,False,0,Code Generation,3
+Refactor this function to improve readability: this log file,12,False,one_shot,True,128000,Code Generation,3
+Summarise the customer feedback log for someone with no background knowledge,17,True,multi_turn,True,8192,Summarization,2
+Write unit tests in Python for this log file,13,False,one_shot,True,200000,Code Generation,3
+Brainstorm potential risks for launching a healthcare provider in a new market,17,False,one_shot,True,128000,Brainstorming,3
+Write a short out-of-office auto-reply message,8,False,multi_turn,False,0,Text Generation,1
+Brainstorm 5 icebreaker questions for a remote team offsite,13,False,multi_turn,True,100000,Brainstorming,3
+Come up with alternative names for our product currently called Project Falcon,19,False,one_shot,True,16000,Brainstorming,3
+"Classify these 25 support tickets as billing, technical, or account issues: the meeting notes",22,False,one_shot,True,32000,Classification,2
+Optimize this C++ function for performance: this document,14,True,multi_turn,True,200000,Code Generation,3
+Rewrite this message to sound less aggressive: the uploaded spreadsheet,18,False,one_shot,True,16000,Rewrite,3
+Condense the shared Google Doc into a short abstract,15,False,one_shot,True,8192,Summarization,2
+Rewrite this product description to sound more persuasive: the pasted code file,19,False,one_shot,True,200000,Rewrite,3
+Why is the sky blue?,4,False,one_shot,False,0,Open QA,1
+Provide an executive summary of this PDF,10,False,one_shot,True,32000,Summarization,3
+Convert this passive-voice paragraph into active voice: this dataset,15,False,multi_turn,True,100000,Rewrite,3
+Help me structure a 45-minute conference talk about the French Revolution,16,False,multi_turn,True,128000,Other,3
+Come up with 8 creative team-building activity ideas,11,False,one_shot,False,0,Brainstorming,2
+Write a one-line joke about programmers,8,False,one_shot,False,0,Text Generation,1
+We've been chatting about my trip to Japan — can you now help me build a full itinerary based on everything I've told you?,30,False,multi_turn,False,0,Chatbot,3
+Optimize this C++ function for performance: the shared Google Doc,14,True,one_shot,True,32000,Code Generation,3
+"Following up on my last message, can you go deeper into the second point?",17,False,multi_turn,True,128000,Chatbot,3
+"Classify these 10 support tickets as billing, technical, or account issues: the meeting notes",21,False,one_shot,True,4096,Classification,2
+Write a haiku about autumn leaves,8,False,multi_turn,False,0,Text Generation,1
+Write a short toast for a wedding,9,False,multi_turn,True,2048,Text Generation,1
+"Brainstorm 5 unconventional marketing angles for a B2B SaaS product, then group them by theme",22,False,one_shot,False,0,Brainstorming,3
+"Plan a full 3-day trip itinerary for Kyoto including food, culture, and budget considerations",20,False,one_shot,False,0,Other,2
+Rewrite this paragraph to be more concise: the pasted code file,15,False,one_shot,True,128000,Rewrite,2
+What year was climate policy first widely studied?,14,False,one_shot,False,0,Closed QA,1
+Extract the dates mentioned in this article,8,False,one_shot,True,2048,Extraction,1
+Design a study plan for the next 6 weeks to prepare for the GRE,17,False,multi_turn,False,0,Other,3
+"Going back to what Priya suggested earlier, can we explore that option further?",19,False,multi_turn,False,0,Chatbot,3
+Brainstorm 5 icebreaker questions for a remote team offsite,13,False,one_shot,False,0,Brainstorming,2
+Walk me through how to negotiate a higher starting salary for a new job offer,21,False,multi_turn,False,0,Other,3
+List the company names referenced in this article,10,False,one_shot,True,4096,Extraction,1
+Help a manufacturing firm decide between two vendors for a new CRM system,18,False,one_shot,False,0,Other,3
+Write a C++ function that merges two sorted linked lists,15,False,multi_turn,False,0,Code Generation,3
+Tag each ticket in the pasted code file by urgency level,15,False,one_shot,True,16000,Classification,2
+What's the capital of France?,9,False,one_shot,False,0,Closed QA,1
+Why do cats purr?,3,False,one_shot,True,8192,Open QA,1
+Come up with alternative names for our product currently called Project Falcon,18,False,one_shot,False,0,Brainstorming,3
+Write a recursive function to compute Fibonacci numbers in Go,15,False,one_shot,False,0,Code Generation,2
+Design a study plan for the next 6 weeks to prepare for the GRE,16,False,multi_turn,False,0,Other,3
+Implement a binary search function in Java,9,False,multi_turn,True,100000,Code Generation,3
+Tag each ticket in the pasted transcript by urgency level,16,False,one_shot,True,16000,Classification,2
+Summarise the shared Google Doc for someone with no background knowledge,15,True,one_shot,True,4096,Summarization,2
+Rewrite this email to sound more formal: the survey responses,13,False,one_shot,True,100000,Rewrite,3
+Write a short birthday message for my coworker Priya,13,False,one_shot,True,2048,Text Generation,1
+Write a short toast for a wedding,8,False,one_shot,False,0,Text Generation,1
+Translate this paragraph into Italian: this text block,12,False,one_shot,True,100000,Rewrite,3
+How many days are in a leap year?,9,False,multi_turn,False,0,Closed QA,1
+How many continents are there?,8,False,one_shot,False,0,Closed QA,1
+Write a SQL query to find the top 3 customers by revenue,16,False,one_shot,False,0,Code Generation,3
+What's the best way to learn Portuguese?,11,False,one_shot,False,0,Open QA,1
+"Brainstorm 12 unconventional marketing angles for a B2B SaaS product, then group them by theme",22,False,multi_turn,False,0,Brainstorming,3
+"Plan a full 3-day trip itinerary for Kyoto including food, culture, and budget considerations",23,False,one_shot,False,0,Other,3
+Rewrite this email to sound more formal: this dataset,14,False,one_shot,True,200000,Rewrite,3
+Write a short out-of-office auto-reply message,10,False,multi_turn,False,0,Text Generation,1
+Write a two-sentence product description for a water bottle,14,False,one_shot,True,2048,Text Generation,1
+Sort these 10 resumes into 'interview' or 'reject' piles: this article,17,False,multi_turn,True,8192,Classification,2
+Let's keep going — what should the next step in our plan be?,15,False,multi_turn,False,0,Chatbot,3
+Pull every dollar figure mentioned in this text block,15,False,one_shot,True,2048,Extraction,1
+Give me a one-paragraph summary of the shared Google Doc,14,False,multi_turn,True,8192,Summarization,3
+Design a study plan for the next 6 weeks to prepare for the GRE,18,False,one_shot,False,0,Other,3
+Refactor this function to improve readability: the shared Google Doc,14,False,one_shot,True,200000,Code Generation,3
+"Label each of these reviews as positive, negative, or neutral: the customer feedback log",21,False,multi_turn,True,4096,Classification,3
+"According to the customer feedback log, what was the reported revenue?",18,False,one_shot,True,4096,Closed QA,1
+"Given all the constraints we've talked through, what's your final recommendation?",19,False,multi_turn,False,0,Chatbot,3
+Compose a short thank-you note for a gift from Chris,12,False,multi_turn,False,0,Text Generation,1
+Brainstorm potential risks for launching a logistics company in a new market,16,False,one_shot,False,0,Brainstorming,2
+Rewrite this message to sound less aggressive: the uploaded spreadsheet,17,False,one_shot,True,32000,Rewrite,3
+List the company names referenced in this PDF,11,False,multi_turn,True,4096,Extraction,1
+Give me 12 name ideas for a new fitness app,13,False,one_shot,False,0,Brainstorming,3
+Pull the total amount due from the email thread below,13,False,one_shot,True,4096,Extraction,1
+Generate ideas for reducing churn at a manufacturing firm,13,False,one_shot,False,0,Brainstorming,2
+Write a haiku about autumn leaves,10,False,one_shot,False,0,Text Generation,1
+Generate a catchy name for a podcast about quantum computing,15,False,one_shot,False,0,Text Generation,1
+Optimize this Go function for performance: this dataset,12,True,multi_turn,True,200000,Code Generation,2
+Brainstorm potential risks for launching a fintech company in a new market,17,False,one_shot,False,0,Brainstorming,3
+What year did World War II end?,8,False,one_shot,False,0,Closed QA,1
+"According to this document, what was the reported revenue?",14,False,multi_turn,True,8192,Closed QA,2
+"Given all the constraints we've talked through, what's your final recommendation?",17,False,one_shot,False,0,Chatbot,3
+Get all the postal addresses from the customer feedback log,14,False,one_shot,True,2048,Extraction,1
+Brainstorm blog post topics for a newsletter about behavioral economics,17,False,one_shot,True,32000,Brainstorming,3
+What year did World War II end?,10,False,multi_turn,False,0,Closed QA,1
+Give me a TL;DR of this article,9,False,one_shot,True,4096,Summarization,2
+Design a study plan for the next 6 weeks to prepare for the GRE,18,False,multi_turn,False,0,Other,3
+Convert this passive-voice paragraph into active voice: this contract,16,False,one_shot,True,128000,Rewrite,3
+Create a REST API endpoint in Rust for user login,14,False,one_shot,False,0,Code Generation,3
+"Continuing from before, can you help me refine the plan we outlined?",18,False,one_shot,False,0,Chatbot,3
+Let's keep going — what should the next step in our plan be?,15,False,multi_turn,False,0,Chatbot,3
+Design a study plan for the next 6 weeks to prepare for the GRE,19,False,multi_turn,False,0,Other,3
+Draft a decision framework for choosing between three job offers,14,False,multi_turn,False,0,Other,3
+Give me a TL;DR of the pasted code file,13,False,multi_turn,True,16000,Summarization,2
+Write a short toast for a wedding,8,False,one_shot,True,2048,Text Generation,1
+Create a REST API endpoint in Python for user login,15,False,one_shot,True,100000,Code Generation,3
+Convert this passive-voice paragraph into active voice: the shared Google Doc,18,False,one_shot,True,32000,Rewrite,3
+Sort these 3 resumes into 'interview' or 'reject' piles: the customer feedback log,20,False,one_shot,True,4096,Classification,2
+"Following up on my last message, can you go deeper into the second point?",17,False,multi_turn,True,32000,Chatbot,3
+"Debug this code snippet, it throws a null pointer exception: this contract",19,False,one_shot,True,200000,Code Generation,3
+How many continents are there?,9,False,one_shot,True,2048,Closed QA,1
+Provide an executive summary of the uploaded spreadsheet,12,False,one_shot,True,16000,Summarization,2
+Let's keep going — what should the next step in our plan be?,15,False,multi_turn,False,0,Chatbot,3
+Write a SQL function that merges two sorted linked lists,14,False,multi_turn,True,16000,Code Generation,3
+"Going back to what Wei suggested earlier, can we explore that option further?",20,False,one_shot,False,0,Chatbot,3
+What is the boiling point of water in Celsius?,10,False,one_shot,False,0,Closed QA,1
+"Continuing from before, can you help me refine the plan we outlined?",18,False,multi_turn,False,0,Chatbot,3
+Generate a catchy name for a podcast about supply chain logistics,16,False,one_shot,True,2048,Text Generation,1
+Give me a TL;DR of the email thread below,11,False,one_shot,True,8192,Summarization,2
+Rewrite this product description to sound more persuasive: the shared Google Doc,19,False,one_shot,True,16000,Rewrite,3
+Write a JavaScript script to scrape headlines from a news site,16,False,one_shot,False,0,Code Generation,2
+Write a short birthday message for my coworker Chris,13,False,one_shot,True,2048,Text Generation,1
+How does exercise affect mood?,7,False,multi_turn,False,0,Open QA,1
+Summarize the key takeaways from the email thread below,14,True,one_shot,True,8192,Summarization,2
+Rewrite this message to sound less aggressive: the pasted transcript,15,False,one_shot,True,200000,Rewrite,3
+Come up with alternative names for our product currently called Project Falcon,17,False,one_shot,False,0,Brainstorming,3
+Condense the shared Google Doc into a short abstract,11,False,one_shot,True,16000,Summarization,2
+Why do cats purr?,7,False,one_shot,True,4096,Open QA,1
+Provide an executive summary of this document,11,False,one_shot,True,4096,Summarization,2
+Brainstorm 20 icebreaker questions for a remote team offsite,16,False,multi_turn,True,200000,Brainstorming,3
+Help a logistics company decide between two vendors for a new CRM system,19,False,multi_turn,True,128000,Other,3
+What is the boiling point of water in Celsius?,11,False,one_shot,False,0,Closed QA,1
+Implement a binary search function in Go,11,False,one_shot,False,0,Code Generation,2
+What year did World War II end?,8,False,multi_turn,False,0,Closed QA,1
+"Continuing from before, can you help me refine the plan we outlined?",15,False,multi_turn,False,0,Chatbot,3
+Summarise the meeting notes in 3 bullet points,10,True,one_shot,True,8192,Summarization,2
+Give me a TL;DR of the uploaded spreadsheet,9,False,one_shot,True,16000,Summarization,2
+Extract the dates mentioned in the survey responses,12,False,one_shot,True,4096,Extraction,1
+Tag each ticket in this document by urgency level,12,False,multi_turn,True,16000,Classification,2
+Classify the topic of each headline in the pasted code file,17,False,multi_turn,True,4096,Classification,2
+Sort these 20 resumes into 'interview' or 'reject' piles: the uploaded spreadsheet,20,False,one_shot,True,16000,Classification,2
+Simplify this paragraph for a 5th-grade reading level: the email thread below,19,False,multi_turn,True,32000,Rewrite,3
+Write a one-line joke about programmers,9,False,multi_turn,True,4096,Text Generation,1
+Give me a one-paragraph summary of the email thread below,15,False,one_shot,True,8192,Summarization,2
+"Continuing from before, can you help me refine the plan we outlined?",16,False,one_shot,False,0,Chatbot,3
+Write a C++ script to scrape headlines from a news site,16,False,multi_turn,False,0,Code Generation,3
+Extract the 5 action items from the survey responses,14,False,multi_turn,True,2048,Extraction,2
+Pull every dollar figure mentioned in the survey responses,13,False,multi_turn,True,4096,Extraction,2
+Get all the postal addresses from the uploaded spreadsheet,13,False,one_shot,True,4096,Extraction,1
+Come up with 5 creative team-building activity ideas,13,False,multi_turn,False,0,Brainstorming,3
+Write unit tests in Java for this article,10,False,one_shot,True,32000,Code Generation,3
+Create a REST API endpoint in Python for user login,12,False,one_shot,False,0,Code Generation,2
+Rewrite this legal clause in plain English while preserving its exact legal meaning: this log file,21,False,one_shot,True,200000,Rewrite,3
+Summarise the attached report for someone with no background knowledge,15,True,multi_turn,True,16000,Summarization,3
+Generate a tagline for a coffee shop,9,False,one_shot,False,0,Text Generation,1
+Write unit tests in C++ for this document,10,False,one_shot,True,200000,Code Generation,3
+Extract the dates mentioned in this document,11,False,multi_turn,True,8192,Extraction,1
+"Continuing from before, can you help me refine the plan we outlined?",18,False,one_shot,False,0,Chatbot,3
+Write a TypeScript function that merges two sorted linked lists,15,False,one_shot,False,0,Code Generation,3
+Classify the topic of each headline in the survey responses,15,False,multi_turn,True,4096,Classification,2
+Rewrite this product description to sound more persuasive: the shared Google Doc,19,False,one_shot,True,100000,Rewrite,3
+"Label each of these reviews as positive, negative, or neutral: the uploaded spreadsheet",21,False,one_shot,True,4096,Classification,2
+"Classify these 10 support tickets as billing, technical, or account issues: the customer feedback log",22,False,multi_turn,True,16000,Classification,2
+Extract the phone numbers from this document,12,False,multi_turn,True,8192,Extraction,2
+What year was ancient Rome first widely studied?,10,False,one_shot,False,0,Closed QA,1
+What is the chemical symbol for gold?,9,False,one_shot,False,0,Closed QA,1
+"Given everything we discussed earlier, what would you recommend I do next?",19,False,multi_turn,False,0,Chatbot,3
+Come up with 8 creative team-building activity ideas,11,False,multi_turn,True,16000,Brainstorming,3
+"Debug this code snippet, it throws a null pointer exception: this article",18,False,multi_turn,True,128000,Code Generation,3
+"Given everything we discussed earlier, what would you recommend I do next?",18,False,multi_turn,False,0,Chatbot,3
+Tag each ticket in this log file by urgency level,12,False,one_shot,True,8192,Classification,2
+Brainstorm potential risks for launching a mid-size retailer in a new market,17,False,one_shot,False,0,Brainstorming,2
+"Going back to what Jordan suggested earlier, can we explore that option further?",17,False,multi_turn,True,128000,Chatbot,3
+"Label each of these reviews as positive, negative, or neutral: the shared Google Doc",18,False,one_shot,True,4096,Classification,2
+"Brainstorm 25 unconventional marketing angles for a B2B SaaS product, then group them by theme",21,False,one_shot,False,0,Brainstorming,3
+Summarise the main arguments made in the pasted code file about quantum computing,17,True,one_shot,True,4096,Summarization,2
+"Label each of these reviews as positive, negative, or neutral: this dataset",18,False,one_shot,True,32000,Classification,2
+"Continuing from before, can you help me refine the plan we outlined?",18,False,multi_turn,True,32000,Chatbot,3
+Implement a binary search function in SQL,9,False,one_shot,True,32000,Code Generation,3
+Come up with alternative names for our product currently called Project Falcon,17,False,multi_turn,False,0,Brainstorming,3
+How many continents are there?,8,False,one_shot,False,0,Closed QA,1
+"Brainstorm 15 unconventional marketing angles for a B2B SaaS product, then group them by theme",23,False,multi_turn,False,0,Brainstorming,3
+Get all the postal addresses from this dataset,10,False,multi_turn,True,8192,Extraction,1
+What year was climate policy first widely studied?,14,False,one_shot,False,0,Closed QA,1
+Put together a 90-day onboarding plan for a new hire at a manufacturing firm,19,False,multi_turn,False,0,Other,3
+"Going back to what Alex suggested earlier, can we explore that option further?",17,False,one_shot,False,0,Chatbot,3
+Rewrite this paragraph to be more concise: the survey responses,14,False,one_shot,True,128000,Rewrite,3
+Rewrite this legal clause in plain English while preserving its exact legal meaning: the pasted transcript,25,False,multi_turn,True,100000,Rewrite,3
+Walk me through how to negotiate a higher starting salary for a new job offer,18,False,one_shot,False,0,Other,3
+Provide an executive summary of the email thread below,11,False,multi_turn,True,4096,Summarization,2
+Design a study plan for the next 6 weeks to prepare for the GRE,18,False,multi_turn,False,0,Other,3
+Give me a one-paragraph summary of this document,10,False,one_shot,True,16000,Summarization,2
+What's your take on remote work versus in-office work?,12,False,multi_turn,False,0,Open QA,1
+Brainstorm blog post topics for a newsletter about behavioral economics,15,False,one_shot,False,0,Brainstorming,3
+"Going back to what Priya suggested earlier, can we explore that option further?",17,False,multi_turn,False,0,Chatbot,3
+Help me think through the tradeoffs of switching careers into data science,17,False,multi_turn,False,0,Other,3
+How do you say 'good morning' in Korean?,13,False,one_shot,False,0,Closed QA,1
+Write a SQL query to find the top 3 customers by revenue,16,False,one_shot,False,0,Code Generation,3
+Put together a 90-day onboarding plan for a new hire at a SaaS startup,17,False,multi_turn,False,0,Other,3
+Write a short birthday message for my coworker Priya,14,False,one_shot,True,8192,Text Generation,1
+What causes inflation?,5,False,one_shot,False,0,Open QA,1
+Write a short toast for a wedding,10,False,multi_turn,True,8192,Text Generation,2
+What's the capital of France?,7,False,one_shot,True,8192,Closed QA,1
+Write a short out-of-office auto-reply message,9,False,one_shot,False,0,Text Generation,1
+"Based on the pasted code file, what date was the meeting scheduled for?",19,False,one_shot,True,2048,Closed QA,1
+"Given all the constraints we've talked through, what's your final recommendation?",16,False,multi_turn,True,128000,Chatbot,3
+Simplify this paragraph for a 5th-grade reading level: this article,15,False,one_shot,True,100000,Rewrite,3
+Tag each sentence in the pasted transcript with its sentiment,13,False,one_shot,True,8192,Classification,2
+Pull the total amount due from the uploaded spreadsheet,14,False,one_shot,True,2048,Extraction,1
+Why do cats purr?,4,False,one_shot,True,4096,Open QA,1
+Write a short out-of-office auto-reply message,11,False,one_shot,False,0,Text Generation,1
+Why is the sky blue?,6,False,multi_turn,False,0,Open QA,1
+Refactor this function to improve readability: the pasted transcript,14,False,multi_turn,True,32000,Code Generation,3
+What's the capital of France?,7,False,multi_turn,False,0,Closed QA,1
+Tag each ticket in this text block by urgency level,15,False,multi_turn,True,8192,Classification,3
+Pull every dollar figure mentioned in the pasted code file,15,False,one_shot,True,2048,Extraction,1
+Rewrite this paragraph to be more concise: the uploaded spreadsheet,15,False,one_shot,True,100000,Rewrite,3
+Extract the dates mentioned in the pasted code file,14,False,one_shot,True,4096,Extraction,1
+What is the boiling point of water in Celsius?,11,False,one_shot,False,0,Closed QA,1
+"Continuing from before, can you help me refine the plan we outlined?",16,False,multi_turn,False,0,Chatbot,3
+Why do people find the immune system so polarizing?,14,False,one_shot,False,0,Open QA,1
+Summarise this log file for someone with no background knowledge,15,True,one_shot,True,8192,Summarization,2
+Convert this passive-voice paragraph into active voice: this article,13,False,multi_turn,True,200000,Rewrite,3
+Write a two-sentence product description for a water bottle,12,False,one_shot,False,0,Text Generation,2
+Generate a catchy name for a podcast about renewable energy,15,False,multi_turn,False,0,Text Generation,1
+"Label each of these reviews as positive, negative, or neutral: this log file",18,False,one_shot,True,8192,Classification,2
+Extract the 3 action items from the email thread below,16,False,one_shot,True,2048,Extraction,1
+Let's keep going — what should the next step in our plan be?,16,False,multi_turn,False,0,Chatbot,3
+Rewrite this email to sound more formal: the email thread below,14,False,multi_turn,True,128000,Rewrite,3
+How many continents are there?,7,False,one_shot,True,4096,Closed QA,1
+Brainstorm potential risks for launching a SaaS startup in a new market,16,False,one_shot,True,128000,Brainstorming,3
+Compose a short thank-you note for a gift from Chris,15,False,one_shot,False,0,Text Generation,1
+"Based on the pasted code file, what date was the meeting scheduled for?",16,False,one_shot,True,8192,Closed QA,1
+"Brainstorm 3 unconventional marketing angles for a B2B SaaS product, then group them by theme",20,False,one_shot,True,100000,Brainstorming,3
+Help me think through the tradeoffs of switching careers into data science,16,False,multi_turn,False,0,Other,3
+Write a short birthday message for my coworker Jordan,12,False,one_shot,True,8192,Text Generation,1
+Rewrite this email to sound more formal: this PDF,11,False,one_shot,True,100000,Rewrite,3
+Generate ideas for reducing churn at a healthcare provider,12,False,one_shot,True,32000,Brainstorming,3
+What year did World War II end?,7,False,one_shot,True,4096,Closed QA,1
+Extract the dates mentioned in the pasted transcript,14,False,one_shot,True,8192,Extraction,1
+Classify the topic of each headline in this article,14,False,multi_turn,True,8192,Classification,2
+What is the boiling point of water in Celsius?,12,False,multi_turn,False,0,Closed QA,1
+Write a SQL query to find the top 8 customers by revenue,16,False,multi_turn,False,0,Code Generation,3
+"Given everything we discussed earlier, what would you recommend I do next?",19,False,one_shot,False,0,Chatbot,3
+Write a short birthday message for my coworker Priya,14,False,one_shot,False,0,Text Generation,1
+Write a haiku about autumn leaves,8,False,multi_turn,False,0,Text Generation,1
+Brainstorm blog post topics for a newsletter about cryptocurrency,13,False,multi_turn,False,0,Brainstorming,3
+"Based on our conversation so far, summarise the options we've considered and pick the best one",23,True,multi_turn,False,0,Chatbot,3
+Give me 25 name ideas for a new fitness app,14,False,one_shot,False,0,Brainstorming,1
+Write a SQL query to find the top 3 customers by revenue,17,False,one_shot,False,0,Code Generation,3
+"Going back to what Chris suggested earlier, can we explore that option further?",19,False,multi_turn,True,128000,Chatbot,3
+Draft a decision framework for choosing between three job offers,13,False,multi_turn,False,0,Other,3
+Sort these 20 resumes into 'interview' or 'reject' piles: the pasted transcript,17,False,one_shot,True,8192,Classification,2
+What is the square root of 144?,9,False,one_shot,True,4096,Closed QA,1
+Summarise this log file in 3 bullet points,12,True,multi_turn,True,4096,Summarization,3
+Draft a decision framework for choosing between three job offers,15,False,one_shot,True,200000,Other,3
+What is the square root of 144?,7,False,one_shot,False,0,Closed QA,1
+Convert this passive-voice paragraph into active voice: this PDF,13,False,one_shot,True,200000,Rewrite,2
+Come up with alternative names for our product currently called Project Falcon,19,False,one_shot,True,32000,Brainstorming,3
+"Debug this code snippet, it throws a null pointer exception: the meeting notes",18,False,one_shot,True,200000,Code Generation,3
+Write a two-sentence product description for a water bottle,12,False,one_shot,True,2048,Text Generation,1
+Give me a one-paragraph summary of the attached report,15,False,multi_turn,True,32000,Summarization,2
+Implement a binary search function in C++,11,False,one_shot,True,200000,Code Generation,3
+What causes inflation?,5,False,multi_turn,True,2048,Open QA,2
+Sort these 15 resumes into 'interview' or 'reject' piles: this log file,18,False,multi_turn,True,4096,Classification,1
+Walk me through how to negotiate a higher starting salary for a new job offer,22,False,multi_turn,False,0,Other,3
+Summarize the key takeaways from this contract,12,True,multi_turn,True,16000,Summarization,2
+"Going back to what Priya suggested earlier, can we explore that option further?",19,False,multi_turn,False,0,Chatbot,3
+Pull out all the email addresses from this article,11,False,one_shot,True,2048,Extraction,1
+Design a study plan for the next 6 weeks to prepare for the GRE,19,False,multi_turn,False,0,Other,3
+Write a recursive function to compute Fibonacci numbers in SQL,13,False,one_shot,True,32000,Code Generation,3
+Brainstorm blog post topics for a newsletter about machine learning,14,False,one_shot,True,32000,Brainstorming,3
+Provide an executive summary of this log file,11,False,multi_turn,True,8192,Summarization,2
+Provide an executive summary of this contract,13,False,one_shot,True,16000,Summarization,2
+What causes inflation?,5,False,one_shot,False,0,Open QA,1
+"Plan a full 3-day trip itinerary for Kyoto including food, culture, and budget considerations",23,False,multi_turn,True,100000,Other,3
+Sort these 3 resumes into 'interview' or 'reject' piles: the uploaded spreadsheet,19,False,multi_turn,True,16000,Classification,2
+Provide an executive summary of the meeting notes,10,False,one_shot,True,8192,Summarization,2
+"Following up on my last message, can you go deeper into the second point?",19,False,multi_turn,True,128000,Chatbot,3
+Write a haiku about autumn leaves,9,False,one_shot,False,0,Text Generation,1
+What is the boiling point of water in Celsius?,14,False,one_shot,False,0,Closed QA,1
