@@ -10,7 +10,6 @@ OPENAI_MODELS = (
     "gpt-5.5-pro",
     "gpt-5.4-pro",
 )
-
 ANTHROPIC_MODELS = (
     "claude-haiku-4-5-20251001",
     "claude-sonnet-5",
@@ -26,12 +25,10 @@ TIER_1_TASKS = (
     "Text Generation",
     "Open QA",
 )
-
 TIER_2_TASKS = (
     "Summarization",
     "Classification",
 )
-
 TIER_3_TASKS = (
     "Code Generation",
     "Chatbot",
@@ -39,7 +36,25 @@ TIER_3_TASKS = (
     "Brainstorming",
     "Other",
 )
+
+from enum import Enum
 import yaml
+
+
+class TaskType(Enum):
+    EXTRACTION = "Extraction"
+    CLOSED_QA = "Closed QA"
+    TEXT_GENERATION = "Text Generation"
+    OPEN_QA = "Open QA"
+    SUMMARIZATION = "Summarization"
+    CLASSIFICATION = "Classification"
+    CODE_GENERATION = "Code Generation"
+    CHATBOT = "Chatbot"
+    REWRITE = "Rewrite"
+    BRAINSTORMING = "Brainstorming"
+    OTHER = "Other"
+    
+    
 
 
 def breakdown_results(result):
