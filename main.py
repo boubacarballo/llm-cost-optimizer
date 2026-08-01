@@ -4,6 +4,8 @@ import sys
 import requests
 import os
 chat = Chat()
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
 
 def send_request(prompt: str, model_config):
 
@@ -67,21 +69,6 @@ if __name__ == "__main__":
         
         
         print(model_config)
-        # use the tier to choose model
-        # use the chat current contecxt window to narrow down which model to pick
-        
-        
-        
-        
-        # exit(1)
-        
-        # provider = "anthropic"
-        # model = "claude-haiku-4-5-20251001"
-        # model_config = {
-        #     "provider": provider,
-        #     "model_id": model,
-        # }
-        
         response = send_request(prompt, model_config)
         
         print(response.output_text)
