@@ -152,17 +152,23 @@ class ModelConfig(BaseModel):
 class SummaryJudgeClaims(BaseModel):
     claim: str
     status: Literal["SUPPORTED", "UNSUPPORTED", "CONTRADICTED"]
-    
-    
+
+
 class SummaryJudgeKeyPoints(BaseModel):
     point: str
     status: Literal["PRESENT", "MISSING"]
-    
-class SummaryJudgeResponse:
+
+
+class SummaryJudgeResponse(BaseModel):
     claims: list[SummaryJudgeClaims]
     points: list[SummaryJudgeKeyPoints]
-    
+
+
 class SummaryJudgeResult(BaseModel):
     precision: float
     recall: float
     raw: dict
+    
+class SummaryJudgeModelConfig(BaseModel):
+    provider: str = "openai"
+    model_id: str = "gpt-5.6-luna"
