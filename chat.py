@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from openai import OpenAI
 from anthropic import Anthropic
+from pydantic import BaseModel
 load_dotenv()
 import time
 
@@ -27,6 +28,7 @@ class Response:
 class Chat:
     
     def __init__(self):
+        print("Creating a chat instance")
         # we check if the keys are present, we only initialize clients for the present keys
         if os.getenv("ANTHROPIC_API_KEY"):
             print("loading anthropic")
@@ -38,22 +40,11 @@ class Chat:
             self.openai_api_key = os.getenv("OPENAI_API_KEY")
             self.openai_client = OpenAI(api_key=self.openai_api_key)
             
-        self.messages = [
-            {
-                "role": "assistant",
-                "content": "You are a helpful assistant"
-            }
-        ]
         
         
-    def send_request(self, prompt, provider, model_id):
         
-        self.messages.append(
-            {
-                "role": "user",
-                "content": prompt
-            }
-        )
+    def send_request(self, messages, provider, model_id, responseFormat: BaseModel=None):
+        
         start_time = time.perf_counter()
         
         match provider:
@@ -62,13 +53,10 @@ class Chat:
             case "openai":
                 response = self.openai_client.responses.create(
                     model=model_id,
-                    input=self.messages
+                    input=messages
                     )
                 latency = get_request_latency(start_time)
-                self.messages.append({
-                    "role": "assistant",
-                    "content": response.output_text
-                })
+
 
                 
                 return Response(
@@ -86,15 +74,11 @@ class Chat:
                      
                 response = self.anthropic_client.messages.create(
                         model=model_id,
-                        messages=self.messages,
+                        messages=messages,
                         max_tokens=1024
                     )
                 latency = get_request_latency(start_time)
                     
-                self.messages.append({
-                        "role": "assistant",
-                        "content": response.content[0].text
-                    })
                     
                 return Response(
                         output_text=response.content[0].text,
