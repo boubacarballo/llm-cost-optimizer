@@ -1,11 +1,11 @@
-from chat import Chat
-from utils import load_models_configs, breakdown_results, get_candidate_models, select_model_and_provider
+from llm_cost_optimizer.chat import Chat
+from llm_cost_optimizer.utils import load_models_configs, breakdown_results, get_candidate_models, select_model_and_provider
 import sys
 import requests
 import os
-chat = Chat()
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
+chat = Chat()
 
 def send_request(prompt: str, model_config):
 
@@ -61,13 +61,7 @@ if __name__ == "__main__":
         print(f"candidates: {candidate_models}")
         
         model_config = select_model_and_provider(candidate_models, context_window=12700)
-        
-        
-        
-        
-        
-        
-        
+
         print(model_config)
         response = send_request(prompt, model_config)
         
