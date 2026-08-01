@@ -51,16 +51,26 @@ class Chat:
             
             
             case "openai":
-                response = self.openai_client.responses.create(
+                response = None
+                if responseFormat:
+                    response = self.openai_client.responses.parse(
+                            model=model_id,
+                            input=messages,
+                            text_format=responseFormat                
+                    )
+                    
+                else:
+                    response = self.openai_client.responses.create(
                     model=model_id,
-                    input=messages
+                    input=messages,
+                    
                     )
                 latency = get_request_latency(start_time)
 
 
                 
                 return Response(
-                    output_text=response.output_text,
+                    output_text=response.output_parsed if responseFormat else response.output_text,
                     input_tokens=0,
                     output_tokens=0,
                     latency=latency,
@@ -71,17 +81,26 @@ class Chat:
             
             case "anthropic":
                 
-                     
-                response = self.anthropic_client.messages.create(
+                response = None
+                
+                if responseFormat:
+                    response = self.anthropic_client.messages.parse(
                         model=model_id,
                         messages=messages,
                         max_tokens=1024
                     )
+                
+                else:
+                    response = self.anthropic_client.messages.create(
+                            model=model_id,
+                            messages=messages,
+                            max_tokens=1024
+                        )
                 latency = get_request_latency(start_time)
                     
                     
                 return Response(
-                        output_text=response.content[0].text,
+                        output_text=response.parsed_output if responseFormat else response.content[0].text,
                         input_tokens=response.usage.input_tokens,
                         output_tokens=response.usage.output_tokens,
                         latency=latency,
@@ -92,6 +111,27 @@ class Chat:
                 
                 
                 
+                
+if __name__ == "__main__":
+    chat = Chat()
+    class Temperature(BaseModel):
+        city: str
+        temperature: float
+        
+    
+    response = chat.send_request(
+        messages=[
+            {
+                "role": "user",
+                "content": "What's the average temperature in New York typically"
+            }
+        ],
+        provider="openai",
+        model_id="gpt-5.4",
+        responseFormat=Temperature
+    )
+    
+    print(response.output_text)
 
         
         
