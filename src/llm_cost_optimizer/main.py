@@ -3,9 +3,9 @@ from utils import load_models_configs, breakdown_results, get_candidate_models, 
 import sys
 import requests
 import os
-chat = Chat()
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
+chat = Chat()
 
 def send_request(prompt: str, model_config):
 
@@ -31,6 +31,12 @@ if __name__ == "__main__":
         raise "Unable to load model configurations"
     
     config = load_models_configs(model_configs_path)
+    messages = [
+        {
+            "role": "assistant",
+            "content": "You are a helpful assistant",
+        }
+    ]
     
     while True: # each full loop corresponds to one session
         
@@ -38,6 +44,7 @@ if __name__ == "__main__":
         
         if prompt == "q":
             print("Goodbye")
+            #save messages
             break
         
         # TODO: logic to determine model and provider
@@ -62,17 +69,27 @@ if __name__ == "__main__":
         
         model_config = select_model_and_provider(candidate_models, context_window=12700)
         
-        
-        
-        
-        
-        
+        #append to the messages array
+        messages.append({
+            "role": "user",
+            "content": prompt
+        })
         
         print(model_config)
-        response = send_request(prompt, model_config)
+        response = chat.send_request(
+            messages=messages,
+            provider=model_config["provider"],
+            model_id=model_config["model_id"],
+        )
         
         print(response.output_text)
-        print(response.latency)
+        
+        #save what the model returned
+        messages.append({
+            "role": "assistant",
+            "content": response.output_text
+        })
+        
         
         
     
