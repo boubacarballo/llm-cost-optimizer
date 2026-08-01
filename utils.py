@@ -39,6 +39,10 @@ TIER_3_TASKS = (
 
 from enum import Enum
 import yaml
+from pydantic import BaseModel, Field
+from typing import Literal
+from typing import Literal
+import json
 
 
 class TaskType(Enum):
@@ -136,3 +140,29 @@ def select_model_and_provider(models, context_window):
         
     
         
+        
+        
+########## Verification Model Configs ########## 
+
+class ModelConfig(BaseModel):
+    provider: Literal["openai", "anthropic"]
+    model_id: str = Field(..., min_length=1)
+
+
+class SummaryJudgeClaims(BaseModel):
+    claim: str
+    status: Literal["SUPPORTED", "UNSUPPORTED", "CONTRADICTED"]
+    
+    
+class SummaryJudgeKeyPoints(BaseModel):
+    point: str
+    status: Literal["PRESENT", "MISSING"]
+    
+class SummaryJudgeResponse:
+    claims: list[SummaryJudgeClaims]
+    points: list[SummaryJudgeKeyPoints]
+    
+class SummaryJudgeResult(BaseModel):
+    precision: float
+    recall: float
+    raw: dict
