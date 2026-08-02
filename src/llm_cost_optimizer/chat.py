@@ -66,13 +66,12 @@ class Chat:
                     
                     )
                 latency = get_request_latency(start_time)
+                data = json.loads(response.model_dump_json())
 
-
-                
                 return Response(
                     output_text=response.output_parsed if responseFormat else response.output_text,
-                    input_tokens=0,
-                    output_tokens=0,
+                    input_tokens=data["usage"]["input_tokens"],
+                    output_tokens=data["usage"]["output_tokens"],
                     latency=latency,
                     cost=0,
                     model_id=model_id
