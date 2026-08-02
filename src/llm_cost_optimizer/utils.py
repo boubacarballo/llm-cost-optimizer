@@ -36,6 +36,7 @@ TIER_3_TASKS = (
     "Brainstorming",
     "Other",
 )
+MILLION_TOKENS = 1000000
 
 from enum import Enum
 import yaml
@@ -123,21 +124,25 @@ def select_model_and_provider(models, context_window):
         
         for model in models:
             if model["context_window"] > context_window:
-                data = {
-                        "provider": "",
-                        "model_id": model["id"]
-                    }
-                if model["id"] in OPENAI_MODELS:
-                    data["provider"] = "openai"
-                    
-                elif model["id"] in ANTHROPIC_MODELS:
-                    data["provider"] = "anthropic"
-                    
-                return data
+                return model
     except Exception as exc:
         raise f"Something went wrong selecting model and provider: {exc}"
     
         
+def parse_token_pricing(model_config):
+    million_token_pricing = model_config["pricing_per_million_tokens"]
+    input_token_pricing = million_token_pricing["input"]
+    output_token_pricing = million_token_pricing["output"]
+    return input_token_pricing, output_token_pricing
+    
+def compute_request_cost(model_config, input_tokens, output_tokens):
+    
+    input_token_pricing, output_token_pricing = parse_token_pricing(model_config)
+    input_cost = input_tokens * (input_token_pricing / MILLION_TOKENS)
+    output_cost = output_tokens * (output_token_pricing / MILLION_TOKENS)
+    return input_cost + output_cost
+
+
     
         
         
