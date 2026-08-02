@@ -44,7 +44,7 @@ from pydantic import BaseModel, Field
 from typing import Literal
 from typing import Literal
 import json
-
+import hashlib
 
 class TaskType(Enum):
     EXTRACTION = "Extraction"
@@ -145,7 +145,9 @@ def compute_request_cost(model_config, input_tokens, output_tokens):
 
     
         
-        
+def hash_text(text):
+    encoded_bytes = text.encode("utf-8")
+    return hashlib.sha256(encoded_bytes).hexdigest()
         
 ########## Verification Model Configs ########## 
 
