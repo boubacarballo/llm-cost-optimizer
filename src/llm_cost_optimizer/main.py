@@ -8,6 +8,7 @@ from contextlib import asynccontextmanager
 from pydantic import BaseModel
 from typing import Literal
 import time
+import uvicorn
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     
@@ -76,6 +77,8 @@ async def chat(req: ChatRequest):
     
     
     
+def start():
+    uvicorn.run("llm_cost_optimizer.main:app", host="127.0.0.1", port=8080, reload=True)
     
     
     
