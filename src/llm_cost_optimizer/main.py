@@ -1,5 +1,5 @@
 from llm_cost_optimizer.chat import Chat, Response
-from llm_cost_optimizer.utils import load_models_configs, breakdown_results, get_candidate_models, select_model_and_provider, compute_request_cost
+from llm_cost_optimizer.utils import load_models_configs, breakdown_results, get_candidate_models, select_model_and_provider, compute_request_cost, hash_text
 import sys
 import requests
 import os
@@ -9,8 +9,12 @@ from pydantic import BaseModel
 from typing import Literal
 import time
 import uvicorn
+from llm_cost_optimizer.database import SessionDep, create_db_and_tables
+from llm_cost_optimizer.models import RequestEvent
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    
+    create_db_and_tables()
     
     global prompt_classifier_url
     global model_configs_path
@@ -44,7 +48,7 @@ class ChatRequest(BaseModel):
     messages: list[Message]
     
 @app.post("/chat")
-async def chat(req: ChatRequest):
+async def chat(req: ChatRequest, session: SessionDep):
     start = time.perf_counter()
     
     params = {
@@ -71,7 +75,22 @@ async def chat(req: ChatRequest):
         model_id=model_config["id"],
     )
     print(time.perf_counter() - start)
+    
+    
     response.cost = compute_request_cost(model_config, response.input_tokens, response.output_tokens)
+    
+    request_event = RequestEvent(
+            prompt_hash=hash_text(req.messages[-1].content),
+            model=model_config["id"],
+            provider=model_config["provider"],
+            cost=response.cost,
+            latency=0.0,
+            quality_score=0.0,
+            escalated=False,    
+    )
+    session.add(request_event)
+    session.commit()
+    session.refresh(request_event)
     return response
     
     
