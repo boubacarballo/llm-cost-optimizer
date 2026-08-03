@@ -1,5 +1,5 @@
 from llm_cost_optimizer.chat import Chat, Response
-from llm_cost_optimizer.utils import load_models_configs, breakdown_results, get_candidate_models, select_model_and_provider, compute_request_cost, hash_text
+from llm_cost_optimizer.utils import TaskType, load_models_configs, breakdown_results, get_candidate_models, select_model_and_provider, compute_request_cost, hash_text
 import sys
 import requests
 import os
@@ -11,6 +11,7 @@ import time
 import uvicorn
 from llm_cost_optimizer.database import SessionDep, create_db_and_tables
 from llm_cost_optimizer.models import RequestEvent
+from llm_cost_optimizer.verification import verify
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     
@@ -42,7 +43,7 @@ async def home():
 
 
 class Message(BaseModel):
-    role: str = Literal["user", "assistant"]
+    role: Literal["user", "assistant"]
     content: str
 class ChatRequest(BaseModel):
     messages: list[Message]
@@ -61,20 +62,21 @@ async def chat(req: ChatRequest, session: SessionDep):
     result = response.json()
         
     tier_flags, contextual_knowledge, complexity = breakdown_results(result)
-    print(f"tier flags {tier_flags}")
         
     candidate_models = get_candidate_models(tier_flags, config)
-    print(f"candidates: {candidate_models}")
+
         
     model_config = select_model_and_provider(candidate_models, context_window=12700)
    
-    print(model_config)
     response = chat.send_request(
         messages=req.messages,
         provider=model_config["provider"],
         model_id=model_config["id"],
     )
-    print(time.perf_counter() - start)
+    task_type = TaskType(result["task_type_1"][0])
+    verification_result = await verify(task_type, req.messages[-1].content, response.output_text, {"id": "gpt-5.6-luna", "provider": "openai"})
+    print(f"latency: {time.perf_counter() - start}")
+    print(f"Verification results: {verification_result}")
     
     
     response.cost = compute_request_cost(model_config, response.input_tokens, response.output_tokens)
@@ -85,12 +87,12 @@ async def chat(req: ChatRequest, session: SessionDep):
             provider=model_config["provider"],
             cost=response.cost,
             latency=0.0,
-            quality_score=0.0,
+            quality_score=verification_result.score,
             escalated=False,    
     )
     session.add(request_event)
-    session.commit()
-    session.refresh(request_event)
+    await session.commit()
+    await session.refresh(request_event)
     return response
     
     

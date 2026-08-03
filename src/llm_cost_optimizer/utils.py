@@ -179,3 +179,8 @@ class SummaryJudgeResult(BaseModel):
 class SummaryJudgeModelConfig(BaseModel):
     provider: str = "openai"
     model_id: str = "gpt-5.6-luna"
+    
+    
+class Verification(BaseModel):
+    task_type: str
+    score: float
