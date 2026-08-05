@@ -10,14 +10,10 @@ from huggingface_hub import PyTorchModelHubMixin
 from transformers import AutoModel, AutoTokenizer, PretrainedConfig
 
 load_dotenv()
-
-
-
-
 classifier = os.getenv("PROMPT_CLASSIFIER_MODEL")
 
 if not classifier:
-    raise ValueError("Failed to load model name")  # raise needs an exception instance, not a bare string
+    raise RuntimeError("Failed to load model name")  # raise needs an exception instance, not a bare string
 
 
 class MeanPooling(nn.Module):
