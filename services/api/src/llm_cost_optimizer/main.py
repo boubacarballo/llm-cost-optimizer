@@ -12,6 +12,8 @@ import uvicorn
 from llm_cost_optimizer.database import SessionDep, create_db_and_tables
 from llm_cost_optimizer.models import RequestEvent
 from llm_cost_optimizer.verification import verify
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     
