@@ -10,8 +10,8 @@ class RequestEvent(SQLModel, table=True):
     provider: str
     cost: float
     latency: float
-    quality_score: float
-    escalated: bool
+    quality_score: float | None = Field(default=None, nullable=True)
+    escalated: bool | None = Field(default=None, nullable=True)
     timestamp: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         sa_column=Column(DateTime(timezone=True), server_default=func.now())

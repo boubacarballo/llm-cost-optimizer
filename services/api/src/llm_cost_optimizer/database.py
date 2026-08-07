@@ -13,7 +13,7 @@ async def create_db_and_tables():
         await conn.run_sync(SQLModel.metadata.create_all)
     
 async def get_session():
-    with SessionLocal() as session:
+    async with SessionLocal() as session:
         yield session
         
 SessionDep = Annotated[AsyncSession, Depends(get_session)]

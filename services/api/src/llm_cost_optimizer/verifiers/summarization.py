@@ -14,9 +14,11 @@ def build_summarization_judge_prompt(source_document: str, summary: str):
 def get_summary_judge_result(summary_response: SummaryJudgeResponse):
     data = json.loads(summary_response.model_dump_json())
     
-    
+    print(f"Data from the verification: {data}")
     claims = data.get("claims")
     points = data.get("points")
+    faithfulness = None
+    coverage = None
     if claims:
         supported = sum(1 for c in claims if c.get("status") == "SUPPORTED")
         faithfulness = supported / len(claims) if claims else 1.0
@@ -24,7 +26,7 @@ def get_summary_judge_result(summary_response: SummaryJudgeResponse):
     if points:
         present = sum(1 for p in points if p.get("status") == "PRESENT")
         coverage = present / len(points) if points else 1.0
-        
+    print(f"faithfulness and coverage: {faithfulness} {coverage}")
     return SummaryJudgeResult(
         precision=faithfulness,
         recall=coverage,

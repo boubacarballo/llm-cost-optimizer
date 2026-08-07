@@ -32,7 +32,7 @@ class Chat:
         # we check if the keys are present, we only initialize clients for the present keys
         if os.getenv("ANTHROPIC_API_KEY"):
             print("loading anthropic")
-            self.anthropic_api_key = os.getenv("ANTRHOPIC_API_KEY")
+            self.anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
             self.anthropic_client = Anthropic(api_key=self.anthropic_api_key)
             
         if os.getenv("OPENAI_API_KEY"):
