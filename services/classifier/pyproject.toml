@@ -27,6 +27,9 @@ explicit = true
 [tool.uv.sources]
 torch = [{ index = "pytorch-cpu" }]
 
+[project.scripts]
+classifier = "classifier.app:main"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

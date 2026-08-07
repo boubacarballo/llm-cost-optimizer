@@ -5,6 +5,7 @@ from pydantic import BaseModel
 import numpy as np
 import torch
 import torch.nn as nn
+import uvicorn
 from dotenv import load_dotenv
 from huggingface_hub import PyTorchModelHubMixin
 from transformers import AutoModel, AutoTokenizer, PretrainedConfig
@@ -161,6 +162,10 @@ async def lifespan(app: FastAPI):
     
     
 app = FastAPI(lifespan=lifespan)
+
+
+def main() -> None:
+    uvicorn.run("classifier.app:app", host="0.0.0.0", port=8000, reload=False)
 
 
 class PromptRequest(BaseModel):
