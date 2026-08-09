@@ -148,6 +148,22 @@ def compute_request_cost(model_config, input_tokens, output_tokens):
 def hash_text(text):
     encoded_bytes = text.encode("utf-8")
     return hashlib.sha256(encoded_bytes).hexdigest()
+
+def generate_messages_template(role: str, message: str, messages: list[dict] = []):
+    if messages:
+        return messages.append(
+            {
+                "role": role,
+                "content": message
+            }
+        )
+        
+    return [
+        {
+            "role": role,
+            "content": message
+        }
+    ]
         
 ########## Verification Model Configs ########## 
 

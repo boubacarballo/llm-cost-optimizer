@@ -4,6 +4,7 @@ from arq.connections import RedisSettings
 from llm_cost_optimizer.utils import TaskType
 from llm_cost_optimizer.verifiers.summarization import verify_summarization
 REDIS_SETTINGS = RedisSettings()
+
 async def handle_verification(
     ctx, 
     task_type: TaskType,
@@ -16,6 +17,8 @@ async def handle_verification(
         case TaskType.SUMMARIZATION:
             summarization_result = await verify_summarization(prompt, response, model_config)
             score = 0.5 * summarization_result.precision + 0.5 * summarization_result.recall
+            
+        
             
 
 
