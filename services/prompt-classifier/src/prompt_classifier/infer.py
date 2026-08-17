@@ -9,7 +9,49 @@ from prompt_classifier.router.features import RouterInput, collate_inputs
 from prompt_classifier.router.model import TierRouter
 from prompt_classifier.train import device_from_arg
 
+def infer_prompt_tier(
+    prompt: str,
+    token_count: int,
+    context_provided: bool,
+    context_window: int,
+    task_type: str,
+    device: str
+    
+):
 
+    checkpoint = "artifacts/tier_router.pt"
+    minimum_confidence = 0.0
+
+    if not 0.0 <= minimum_confidence <= 1.0:
+        raise ValueError("minimum_confidence must be between 0 and 1")
+
+    device = device_from_arg(device)
+    model = TierRouter.from_checkpoint(checkpoint, device)
+    item = RouterInput(
+        prompt=prompt,
+        token_count=token_count,
+        context_provided=context_provided,
+        context_window=context_window,
+        task_type=task_type,
+    )
+    tensors = collate_inputs(
+        [item],
+        hash_buckets=model.config["hash_buckets"],
+        max_prompt_tokens=model.config["max_prompt_tokens"],
+        device=device,
+    )
+    with torch.no_grad():
+        probabilities = torch.softmax(model(**tensors), dim=1)[0].cpu().tolist()
+    raw_tier = int(torch.tensor(probabilities).argmax().item()) + 1
+    confidence = probabilities[raw_tier - 1]
+    tier = min(raw_tier + 1, 3) if confidence < minimum_confidence else raw_tier
+    return {
+        "tier": tier,
+        "raw_tier": raw_tier,
+        "confidence": round(confidence, 4),
+        "probabilities": {f"tier_{index + 1}": round(value, 4) for index, value in enumerate(probabilities)},
+        "device": str(device),
+    }
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", default="artifacts/tier_router.pt")
