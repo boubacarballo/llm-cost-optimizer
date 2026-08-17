@@ -11,6 +11,7 @@ dependencies = [
 [project.scripts]
 train = "prompt_classifier.train:main"
 infer = "prompt_classifier.infer:main"
+classify = "prompt_classifier.app:main"
 
 [build-system]
 requires = ["hatchling"]
