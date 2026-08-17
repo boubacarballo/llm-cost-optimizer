@@ -47,7 +47,7 @@ async def verify_summarization(prompt: str, response: str, judge_model_config) -
             "content": summary_judge_sys_prompt
         },
     ]
-    
+
     response = chat.send_request(
         messages, 
         judge_model_config["provider"],
