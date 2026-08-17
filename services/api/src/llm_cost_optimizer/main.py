@@ -88,7 +88,7 @@ async def chat(req: ChatRequest, session: SessionDep):
     session.add(request_event)
     await session.commit()
     await session.refresh(request_event)
-    await redis.enqueue_job('handle_verification', task_type, req.messages[-1].content, response.output_text, {"id": "gpt-5.6-luna", "provider": "openai"})
+    await redis.enqueue_job('handle_verification', task_type, req.messages[-1].content, response.output_text, model_config)
     return response
     
     
