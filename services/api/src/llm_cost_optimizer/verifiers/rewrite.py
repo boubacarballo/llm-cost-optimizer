@@ -4,7 +4,9 @@ from typing import Literal, List, Optional
 from llm_cost_optimizer.chat import Chat, Response
 from llm_cost_optimizer.utils import Verification
 from llm_cost_optimizer.types.types import VerificationResult
+from llm_cost_optimizer.verifiers.utils import handle_alternate_verification
 import asyncio
+
 chat = Chat()
 
 REWRITE_JUDGE_PROMPT_TEMPLATE = """
@@ -86,6 +88,7 @@ def get_rewrite_judge_result(judge_response: RewriteJudgeResponse) -> RewriteJud
                             )
 
 
+
 async def verify_rewrite(prompt: str, response: str, judge_model_config) -> RewriteJudgeResult:
 
     judge_prompt = build_rewrite_judge_prompt(
@@ -101,10 +104,41 @@ async def verify_rewrite(prompt: str, response: str, judge_model_config) -> Rewr
     ]
 
     # ask model to output structured JSON parsed into RewriteJudgeResponse
-    judge_response = chat.send_request(messages, judge_model_config["provider"], judge_model_config["id"], RewriteJudgeResponse)
+    judge_response = await chat.send_request(messages, model_config=judge_model_config, responseFormat=RewriteJudgeResponse)
 
     result = get_rewrite_judge_result(judge_response.output_text)
+        
     return result
+
+async def run_rewrite_judge(
+    initial_res,
+    similar_res,
+    higher_res,
+):
+    
+    pass
+    
+
+async def handle_rewrite_verification(
+    prompt,
+    response,
+    model_config
+):
+    initial_res = await verify_rewrite(
+        prompt=prompt,
+        response=response,
+        model_config=model_config
+    )
+    if initial_res.verdict == "Bad":
+        similar_res, higher_res = await handle_alternate_verification(
+            verification_function=verify_rewrite,
+            prompt=prompt,
+            response=response,
+            model_config=model_config
+        )
+        
+        # now we run the judge for all res
+        
 
 
 if __name__ == "__main__":

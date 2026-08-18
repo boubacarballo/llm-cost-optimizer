@@ -48,13 +48,12 @@ async def verify_summarization(prompt: str, response: str, judge_model_config) -
         },
     ]
 
-    response = chat.send_request(
+    response = await chat.send_request(
         messages, 
-        judge_model_config["provider"],
-        judge_model_config["id"],
-        SummaryJudgeResponse
+        model_config=judge_model_config,
+        responseFormat=SummaryJudgeResponse
     )
-    
+
     results = get_summary_judge_result(response.output_text)
     return results
     

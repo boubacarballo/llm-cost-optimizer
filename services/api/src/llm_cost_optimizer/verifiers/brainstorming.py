@@ -21,13 +21,11 @@ async def verify_brainstorming(prompt: str, response:str, judge_model_config) ->
         role="user",
         message=brainstorming_judge_prompt
     )
-    response = chat.send_request(
-        messages, 
-        judge_model_config["provider"],
-        judge_model_config["id"],
-        BrainstormingJudgeOutput
+    response = await chat.send_request(
+        messages,
+        model_config=judge_model_config,
+        responseFormat=BrainstormingJudgeOutput
     )
-    
     return response.output_text
 
 
