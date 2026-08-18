@@ -1,0 +1,155 @@
+tiers:
+  tier_1:
+    - id: gpt-5.6-luna
+      provider: openai
+      pricing_per_million_tokens:
+        input: 1.00
+        output: 6.00
+      reasoning_model: true      # adjustable reasoning effort
+      context_window: 1000000
+      max_output_tokens: 128000
+      best_for: "high-volume, low-latency tasks: classification, extraction, simple chat"
+
+    - id: gpt-5.4-nano
+      provider: openai
+      pricing_per_million_tokens:
+        input: 0.20
+        output: 1.25
+      reasoning_model: true
+      context_window: 400000
+      max_output_tokens: null
+      best_for: "cheapest floor tier; routing, tagging, short-form completions"
+
+    - id: gpt-5-nano
+      provider: openai
+      pricing_per_million_tokens:
+        input: 0.05
+        output: 0.40
+      reasoning_model: true
+      context_window: 400000
+      max_output_tokens: null
+      best_for: "legacy/cheapest option still live; same use cases as 5.4-nano at lower cost"
+
+    - id: claude-haiku-4-5-20251001
+      provider: anthropic
+      pricing_per_million_tokens:
+        input: 1.00
+        output: 5.00
+      reasoning_model: true      # hybrid model, extended thinking is toggle-able
+      context_window: 1000000
+      max_output_tokens: null
+      best_for: "fast, cheap production workloads: classification, extraction, short summaries"
+
+  tier_2:
+    - id: gpt-5.6-terra
+      provider: openai
+      pricing_per_million_tokens:
+        input: 2.50
+        output: 15.00
+      reasoning_model: true
+      context_window: 1000000
+      max_output_tokens: 128000
+      best_for: "everyday balanced workload; ~GPT-5.5 quality at half cost"
+
+    - id: gpt-5.5
+      provider: openai
+      pricing_per_million_tokens:
+        input: 5.00
+        output: 30.00
+      reasoning_model: true
+      context_window: 1050000   # 922k input + 128k output
+      max_output_tokens: 128000
+      best_for: "complex professional workloads, strong reliability on hard tasks"
+
+    - id: gpt-5.4
+      provider: openai
+      pricing_per_million_tokens:
+        input: 2.50
+        output: 15.00
+      reasoning_model: true
+      context_window: 400000
+      max_output_tokens: null
+      best_for: "prior-gen balanced tier; keep only if pinned for reproducibility"
+
+    - id: claude-sonnet-5
+      provider: anthropic
+      pricing_per_million_tokens:
+        input: 2.00               # introductory, through 2026-08-31
+        output: 10.00
+        input_after_2026_09_01: 3.00
+        output_after_2026_09_01: 15.00
+      reasoning_model: true
+      context_window: 1000000
+      max_output_tokens: null
+      best_for: "new default for agentic/production work; near-Opus quality on knowledge tasks"
+
+    - id: claude-sonnet-4-6
+      provider: anthropic
+      pricing_per_million_tokens:
+        input: 3.00
+        output: 15.00
+      reasoning_model: true
+      context_window: 1000000
+      max_output_tokens: null
+      best_for: "prior-gen balanced tier, now largely superseded by Sonnet 5"
+
+  tier_3:
+    - id: gpt-5.6-sol
+      provider: openai
+      pricing_per_million_tokens:
+        input: 5.00
+        output: 30.00
+      reasoning_model: true      # six effort levels, plus Pro and Ultra (multi-agent) modes
+      context_window: 1000000
+      max_output_tokens: 128000
+      best_for: "flagship agentic coding / complex reasoning; SOTA on Terminal-Bench 2.1 per OpenAI"
+
+    - id: gpt-5.5-pro
+      provider: openai
+      pricing_per_million_tokens:
+        input: 30.00
+        output: 180.00
+      reasoning_model: true
+      context_window: 1050000
+      max_output_tokens: 128000
+      best_for: "extended-reasoning, output-bottlenecked workloads; highest OpenAI price point"
+
+    - id: gpt-5.4-pro
+      provider: openai
+      pricing_per_million_tokens:
+        input: 30.00
+        output: 180.00
+      reasoning_model: true
+      context_window: 400000
+      max_output_tokens: null
+      best_for: "prior-gen Pro tier; same price as 5.5-pro, weaker capability"
+
+    - id: claude-opus-5
+      provider: anthropic
+      pricing_per_million_tokens:
+        input: 5.00
+        output: 25.00
+      reasoning_model: true
+      context_window: 1000000
+      max_output_tokens: null
+      best_for: "Anthropic's recommended starting point for complex agentic coding & enterprise work"
+
+    - id: claude-opus-4-8
+      provider: anthropic
+      pricing_per_million_tokens:
+        input: 5.00
+        output: 25.00
+      reasoning_model: true
+      context_window: 1000000
+      max_output_tokens: null
+      best_for: "prior-gen flagship, superseded by Opus 5 on 2026-07-24"
+
+    - id: claude-fable-5
+      provider: anthropic
+      pricing_per_million_tokens:
+        input: 10.00
+        output: 50.00
+      reasoning_model: true
+      context_window: 1000000
+      max_output_tokens: null
+      best_for: "long-running agents, hardest coding/knowledge work; falls back to Opus 4.8 on some flagged bio/cyber requests"
