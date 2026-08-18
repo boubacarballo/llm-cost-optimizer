@@ -37,7 +37,7 @@ class AlternateVerification(BaseModel):
     rounds: Optional[list[VerificationRound]]
     
 
-async def log_routing_failure(initial_model_config, alternate_model_config, initial_res, alternate_res):
+async def log_routing_failure(initial_model_config, alternate_model_config, initial_res, alternate_res, verification_log: AlternateVerification):
     pass
         
     
@@ -48,13 +48,12 @@ async def handle_alternate_verification(
     prompt,
     model_config
 ):
-    satisfactory_answer_found = False
     alternate_verification_rounds = 0
     rounds = []
     similar_model_alternate_response = None
     higher_model_alternate_response = None
     
-    while not satisfactory_answer_found:
+    while True:
         alternate_verification_rounds += 1
         verification = VerificationRound(round=alternate_verification_rounds)
         
@@ -104,26 +103,27 @@ async def handle_alternate_verification(
         if similar_model_alternate_response.verdict == "Bad" and higher_model_alternate_response.verdict == "Bad":
             continue
         else:
-            satisfactory_answer_found = True
             break
+
         
-    if similar_model_alternate_response.verdict == "Good":
-        await log_routing_failure(
-                        initial_model_config=model_config,
-                        alternate_model_config=alternate_similar_tier_model,
-                        initial_res=initial_response,
-                        alternate_res=similar_model_alternate_response
-                        
-                    )
-        
-    elif higher_model_alternate_response.verdict == "Good":
-        await log_routing_failure(
-                                initial_model_config=model_config,
-                                alternate_model_config=alternate_higher_tier_model,
-                                initial_res=initial_response,
-                                alternate_res=higher_model_alternate_response
-                                
-                            )
+    for alternate_tier, alternate_model, alternate_response in (
+    ("similar", alternate_similar_tier_model, similar_model_alternate_response),
+    ("higher", alternate_higher_tier_model, higher_model_alternate_response),):
+        if alternate_response is not None and alternate_response.verdict == "Good":
+            verification_log = AlternateVerification(
+                rounds=alternate_verification_rounds,
+                satisfactory_model=alternate_tier,
+                rounds=rounds
+            )
+            await log_routing_failure(
+                initial_model_config=model_config,
+                alternate_model_config=alternate_model,
+                initial_res=initial_response,
+                alternate_res=alternate_response,
+                verification_log=verification_log
+                
+            )
+            break
 
 
         
