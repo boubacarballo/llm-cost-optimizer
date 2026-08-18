@@ -2,6 +2,8 @@
 from typing import Literal
 from llm_cost_optimizer.utils import config
 from llm_cost_optimizer.chat import Chat
+from pydantic import BaseModel
+from typing import Literal, Optional
 chat = Chat()
 
 async def select_alternate_model(model_config: dict, tier: Literal["similar", "higher"]):
@@ -22,54 +24,106 @@ async def select_alternate_model(model_config: dict, tier: Literal["similar", "h
         higher_tier_models = config["tiers"][new_tier]
         return higher_tier_models[0] if higher_tier_models else None
     
+    
+class VerificationRound(BaseModel):
+    round: int
+    similar_res: Optional[any]
+    higher_res: Optional[any]
+    
+    
+class AlternateVerification(BaseModel):
+    rounds: int
+    satisfactory_model: Optional[Literal["similar", "higher"]]
+    rounds: Optional[list[VerificationRound]]
+    
+
+async def log_routing_failure(initial_model_config, alternate_model_config, initial_res, alternate_res):
+    pass
+        
+    
+    
 async def handle_alternate_verification(
     verification_function,
+    initial_response,
     prompt,
     model_config
 ):
+    satisfactory_answer_found = False
+    alternate_verification_rounds = 0
+    rounds = []
+    similar_model_alternate_response = None
+    higher_model_alternate_response = None
     
-    alternate_similar_tier_model = await select_alternate_model(
-                model_config=model_config,
-                tier="similar"
-            )
-    alternate_higher_tier_model = await select_alternate_model(
-                model_config=model_config,
-                tier="higher"
-            )
+    while not satisfactory_answer_found:
+        alternate_verification_rounds += 1
+        verification = VerificationRound(round=alternate_verification_rounds)
+        
     
-    similar_res = await chat.send_request(
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ],
-                model_config=alternate_similar_tier_model,
-    )
-    higher_res = await chat.send_request(
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        model_config=alternate_higher_tier_model
-    )
-    similar_model_alternate_response = await verification_function(
-        prompt=prompt,
-        response=similar_res.output_text,
-        model_config=alternate_similar_tier_model
-    )
-    
-    higher_model_alternate_response = await verification_function(
-        prompt=prompt,
-        response=higher_res.output_text,
-        model_config=alternate_higher_tier_model
-    )
-    
-    return similar_model_alternate_response, higher_model_alternate_response
-    
+        alternate_similar_tier_model = await select_alternate_model(
+                    model_config=model_config,
+                    tier="similar"
+                )
+        alternate_higher_tier_model = await select_alternate_model(
+                    model_config=model_config,
+                    tier="higher"
+                )
+        
+        similar_res = await chat.send_request(
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": prompt
+                        }
+                    ],
+                    model_config=alternate_similar_tier_model,
+        )
+        higher_res = await chat.send_request(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            model_config=alternate_higher_tier_model
+        )
+        similar_model_alternate_response = await verification_function(
+            prompt=prompt,
+            response=similar_res.output_text,
+            model_config=alternate_similar_tier_model
+        )
+        
+        higher_model_alternate_response = await verification_function(
+            prompt=prompt,
+            response=higher_res.output_text,
+            model_config=alternate_higher_tier_model
+        )
+        verification.similar_res=similar_model_alternate_response
+        verification.higher_res=higher_model_alternate_response
+        rounds.append(verification)
+        
+        if similar_model_alternate_response.verdict == "Bad" and higher_model_alternate_response.verdict == "Bad":
+            continue
+        else:
+            satisfactory_answer_found = True
+            break
+        
+    if similar_model_alternate_response.verdict == "Good":
+        await log_routing_failure(
+                        initial_model_config=model_config,
+                        alternate_model_config=alternate_similar_tier_model,
+                        initial_res=initial_response,
+                        alternate_res=similar_model_alternate_response
+                        
+                    )
+        
+    elif higher_model_alternate_response.verdict == "Good":
+        await log_routing_failure(
+                                initial_model_config=model_config,
+                                alternate_model_config=alternate_higher_tier_model,
+                                initial_res=initial_response,
+                                alternate_res=higher_model_alternate_response
+                                
+                            )
 
 
-    
-    
+        
