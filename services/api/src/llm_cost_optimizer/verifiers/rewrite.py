@@ -4,7 +4,7 @@ from typing import Literal, List, Optional
 from llm_cost_optimizer.chat import Chat, Response
 from llm_cost_optimizer.utils import Verification
 from llm_cost_optimizer.types.types import VerificationResult
-from llm_cost_optimizer.verifiers.utils import handle_alternate_verification
+from llm_cost_optimizer.verifiers.utils import handle_alternate_verification, log_routing_failure
 import asyncio
 
 chat = Chat()
@@ -109,12 +109,6 @@ async def verify_rewrite(prompt: str, response: str, judge_model_config) -> Rewr
     result = get_rewrite_judge_result(judge_response.output_text)
         
     return result
-
-async def run_rewrite_judge(
-    initial_res,
-    similar_res,
-    higher_res,
-):
     
     pass
     
@@ -129,16 +123,13 @@ async def handle_rewrite_verification(
         response=response,
         model_config=model_config
     )
-    if initial_res.verdict == "Bad":
-        similar_res, higher_res = await handle_alternate_verification(
+    if initial_res.verdict == "Bad": # in this branch we log routing failure
+        await handle_alternate_verification(
             verification_function=verify_rewrite,
+            initial_response=initial_res,
             prompt=prompt,
-            response=response,
             model_config=model_config
         )
-        
-        # now we run the judge for all res
-        
 
 
 if __name__ == "__main__":
