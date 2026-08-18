@@ -70,10 +70,9 @@ async def chat(req: ChatRequest, session: SessionDep):
 
         
     model_config = select_model_and_provider(candidate_models, context_window=12700)
-    response = chat.send_request(
+    response = await chat.send_request(
         messages=req.messages,
-        provider=model_config["provider"],
-        model_id=model_config["id"],
+        model_config=model_config,
     )
     task_type = TaskType(result["task_type_1"][0])
     response.cost = compute_request_cost(model_config, response.input_tokens, response.output_tokens)

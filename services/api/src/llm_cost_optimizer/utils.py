@@ -45,6 +45,7 @@ from typing import Literal
 from typing import Literal
 import json
 import hashlib
+import os
 
 class TaskType(Enum):
     EXTRACTION = "Extraction"
@@ -97,6 +98,8 @@ def load_models_configs(path):
     except FileNotFoundError as err:
         print(f"File not found or invalid path: {err}")
         
+
+config = load_models_configs(os.getenv("MODEL_CONFIGS_PATH"))
 
 def get_candidate_models(flags, config):
     try:

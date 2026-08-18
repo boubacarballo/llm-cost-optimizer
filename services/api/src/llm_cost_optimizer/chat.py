@@ -6,6 +6,7 @@ from anthropic import Anthropic
 from pydantic import BaseModel
 load_dotenv()
 import time
+import asyncio
 
 
 def get_request_latency(start_time):
@@ -43,9 +44,10 @@ class Chat:
         
         
         
-    def send_request(self, messages, provider, model_id, responseFormat: BaseModel=None):
-        
+    async def send_request(self, messages, model_config: dict, responseFormat: BaseModel=None):
         start_time = time.perf_counter()
+        provider = model_config.get("provider") if model_config else None
+        model_id = model_config.get("id") if model_config else None
         
         match provider:
             
@@ -53,18 +55,17 @@ class Chat:
             case "openai":
                 response = None
                 if responseFormat:
-                    response = self.openai_client.responses.parse(
+                    response = await self.openai_client.responses.parse(
                             model=model_id,
                             input=messages,
                             text_format=responseFormat                
                     )
-                    
                 else:
-                    response = self.openai_client.responses.create(
-                    model=model_id,
-                    input=messages,
-                    
+                    response = await self.openai_client.responses.create(
+                        model=model_id,
+                        input=messages,
                     )
+
                 latency = get_request_latency(start_time)
                 data = json.loads(response.model_dump_json())
 
@@ -83,14 +84,13 @@ class Chat:
                 response = None
                 
                 if responseFormat:
-                    response = self.anthropic_client.messages.parse(
+                    response = await self.anthropic_client.messages.parse(
                         model=model_id,
                         messages=messages,
                         max_tokens=1024
                     )
-                
                 else:
-                    response = self.anthropic_client.messages.create(
+                    response = await self.anthropic_client.messages.create(
                             model=model_id,
                             messages=messages,
                             max_tokens=1024
@@ -116,20 +116,18 @@ if __name__ == "__main__":
     class Temperature(BaseModel):
         city: str
         temperature: float
-        
-    
-    response = chat.send_request(
+
+    response = asyncio.run(chat.send_request(
         messages=[
             {
                 "role": "user",
                 "content": "What's the average temperature in New York typically"
             }
         ],
-        provider="openai",
-        model_id="gpt-5.4",
+        model_config={"provider": "openai", "id": "gpt-5.4"},
         responseFormat=Temperature
-    )
-    
+    ))
+
     print(response.output_text)
 
         
