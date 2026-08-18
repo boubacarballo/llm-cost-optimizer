@@ -110,7 +110,6 @@ async def verify_rewrite(prompt: str, response: str, judge_model_config) -> Rewr
         
     return result
     
-    pass
     
 
 async def handle_rewrite_verification(
