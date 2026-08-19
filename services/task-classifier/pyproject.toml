@@ -1,5 +1,5 @@
 [project]
-name = "classifier"
+name = "task-classifier"
 version = "0.1.0"
 description = "DeBERTa prompt-complexity classifier model server. Heavy ML deps, isolated image (GPU-friendly)."
 readme = "README.md"
@@ -10,6 +10,7 @@ dependencies = [
     "huggingface-hub>=1.26.0",
     "numpy>=2.5.1",
     "pydantic>=2.13.4",
+    "python-dotenv>=1.2.2",
     "torch>=2.13.0",
     "transformers>=5.14.1",
     "uvicorn>=0.52.1",
@@ -28,11 +29,11 @@ explicit = true
 torch = [{ index = "pytorch-cpu" }]
 
 [project.scripts]
-classifier = "classifier.app:main"
+task-classifier = "task_classifier.app:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/classifier"]
+packages = ["src/task_classifier"]

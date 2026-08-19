@@ -6,4 +6,4 @@ COPY pyproject.toml README.md ./
 COPY src/ ./src/
 RUN uv venv
 RUN uv pip install --no-cache-dir .
-CMD ["uv", "run", "-m", "uvicorn", "classifier.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "-m", "uvicorn", "task_classifier.app:app", "--host", "0.0.0.0", "--port", "8000"]

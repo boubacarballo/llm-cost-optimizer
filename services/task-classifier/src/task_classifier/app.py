@@ -1,3 +1,4 @@
+import asyncio
 import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -11,7 +12,7 @@ from huggingface_hub import PyTorchModelHubMixin
 from transformers import AutoModel, AutoTokenizer, PretrainedConfig
 
 load_dotenv()
-classifier = os.getenv("PROMPT_CLASSIFIER_MODEL")
+classifier = os.getenv("TASK_CLASSIFIER_MODEL")
 
 if not classifier:
     raise RuntimeError("Failed to load model name")  # raise needs an exception instance, not a bare string
@@ -165,21 +166,20 @@ app = FastAPI(lifespan=lifespan)
 
 
 def main() -> None:
-    uvicorn.run("classifier.app:app", host="0.0.0.0", port=8000, reload=False)
+    uvicorn.run("task_classifier.app:app", host="0.0.0.0", port=8000, reload=False)
 
 
 class PromptRequest(BaseModel):
     prompt: str
-    
-@app.get("/home")
-def home():
-    return {"message": "Hello World"}
-    
-@app.post("/classify")
-def classify(req: PromptRequest):
 
+@app.get("/home")
+async def home():
+    return {"message": "Hello World"}
+
+
+def _run_classification(prompt: str):
     encoded_prompt = tokenizer(
-        req.prompt,
+        prompt,
         return_tensors="pt",
         add_special_tokens=True,
         max_length=512,
@@ -188,6 +188,9 @@ def classify(req: PromptRequest):
     )
 
     with torch.no_grad():
-        result = model(encoded_prompt)
+        return model(encoded_prompt)
 
-    return result
+
+@app.post("/classify")
+async def classify(req: PromptRequest):
+    return await asyncio.to_thread(_run_classification, req.prompt)
