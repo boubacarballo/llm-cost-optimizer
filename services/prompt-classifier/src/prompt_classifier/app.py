@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import FastAPI, HTTPException
 from contextlib import asynccontextmanager
 from pydantic import BaseModel
@@ -24,17 +25,18 @@ class PromptRequest(BaseModel):
     
 
 @app.get("/health")
-def health():
+async def health():
     return {"message": "The server is running"}
 
 @app.get("/")
-def home():
+async def home():
     return {"message", "prompt-classifier server"}
 
 @app.post("/classify")
-def classify_prompt(req: PromptRequest):
-    
-    response = infer_prompt_tier(
+async def classify_prompt(req: PromptRequest):
+
+    response = await asyncio.to_thread(
+        infer_prompt_tier,
         prompt=req.prompt,
         token_count=req.token_count,
         context_provided=req.context_provided,
@@ -42,7 +44,7 @@ def classify_prompt(req: PromptRequest):
         task_type=req.task_type,
         device=req.device
     )
-    
+
     return {"results": response}
 
 
