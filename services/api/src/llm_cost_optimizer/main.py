@@ -14,6 +14,8 @@ from llm_cost_optimizer.models import RequestEvent
 from llm_cost_optimizer.verification import verify
 from arq.connections import RedisSettings
 from arq import create_pool
+import httpx
+from fastapi.responses import StreamingResponse
 
 
 @asynccontextmanager
@@ -21,8 +23,11 @@ async def lifespan(app: FastAPI):
     
     await create_db_and_tables()
     global redis
+    global async_client
+    async_client = httpx.AsyncClient()
     redis = await create_pool(RedisSettings())
     global prompt_classifier_url
+    global task_classifier_url
     global model_configs_path
     task_classifier_url = os.getenv("TASK_CLASSIFIER_SERVER_URL")
     prompt_classifier_url = os.getenv("PROMPT_CLASSIFIER_SERVER_URL")
@@ -60,23 +65,26 @@ async def chat(req: ChatRequest, session: SessionDep):
     params = {
         "prompt": req.messages[-1].content,
     }
-    response = await requests.post(
+    response = await async_client.post(
         url=task_classifier_url,
         json=params
     )
     result = response.json()
+    print("Got request back from task classifier")
     task_type = TaskType(result["task_type_1"][0])
-    res = await requests.post(
+    res = await async_client.post(
         url=prompt_classifier_url,
         json={
-            "prompt": req.messages[-1].content,
-            "token_count": len(req.messages[-1].content) // 4,
+            "prompt": str(req.messages[-1].content),
+            "token_count": int(len(req.messages[-1].content) // 4),
+            "context_window": int(len(req.messages[-1].content) // 4),
             "context_provided": True if len(req.messages) else False,
-            "task_type": task_type.value
+            "task_type": task_type.value,
             "device": "auto"
         }
     )
     data = res.json()
+    print("Got response back from prompt classifier")
     model_config = get_model(
         data=data,
         context_window=120000
@@ -93,13 +101,23 @@ async def chat(req: ChatRequest, session: SessionDep):
             provider=model_config["provider"],
             cost=model_response.cost,
             latency=0.0, 
+            escalated=False,
     )
     
     session.add(request_event)
     await session.commit()
     await session.refresh(request_event)
     await redis.enqueue_job('handle_verification', task_type, req.messages[-1].content, model_response.output_text, model_config)
-    return response
+
+    return {
+        "output_text": model_response.output_text,
+        "input_tokens": model_response.input_tokens,
+        "output_tokens": model_response.output_tokens,
+        "latency": model_response.latency,
+        "cost": model_response.cost,
+        "model_id": model_response.model_id,
+        "prompt_classification": data,
+    }
     
 def start():
     uvicorn.run("llm_cost_optimizer.main:app", host="127.0.0.1", port=8080, reload=True)
