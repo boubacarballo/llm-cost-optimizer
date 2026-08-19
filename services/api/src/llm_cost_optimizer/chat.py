@@ -1,8 +1,8 @@
 import json
 from dotenv import load_dotenv
 import os
-from openai import OpenAI
-from anthropic import Anthropic
+from openai import AsyncOpenAI
+from anthropic import AsyncAnthropic
 from pydantic import BaseModel
 load_dotenv()
 import time
@@ -34,12 +34,12 @@ class Chat:
         if os.getenv("ANTHROPIC_API_KEY"):
             print("loading anthropic")
             self.anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
-            self.anthropic_client = Anthropic(api_key=self.anthropic_api_key)
+            self.anthropic_client = AsyncAnthropic(api_key=self.anthropic_api_key)
             
         if os.getenv("OPENAI_API_KEY"):
             print("loading openai")
             self.openai_api_key = os.getenv("OPENAI_API_KEY")
-            self.openai_client = OpenAI(api_key=self.openai_api_key)
+            self.openai_client = AsyncOpenAI(api_key=self.openai_api_key)
             
         
         

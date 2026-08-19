@@ -7,7 +7,7 @@ from typing import Dict, List, Optional, Tuple
 import yaml
 from pydantic import BaseModel, Field
 from typing import Literal
-from python_dotenv import load_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -172,7 +172,7 @@ def generate_messages_template(role: str, message: str, messages: Optional[List[
 
 def get_model(data: dict, context_window: int) -> dict:
     config = load_models_configs(os.getenv("MODEL_CONFIGS_PATH"))
-    model_tier = "tier_" + int(data["tier"])
+    model_tier = "tier_" + str(data["results"]["tier"])
     tier_models = config["tiers"][model_tier]
     model_config = select_model_and_provider(
         models=tier_models,
