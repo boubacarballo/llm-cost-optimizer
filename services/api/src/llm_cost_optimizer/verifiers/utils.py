@@ -31,8 +31,8 @@ class VerificationRound(BaseModel):
     higher_res: Optional[any]
     
     
-class AlternateVerification(BaseModel):
-    rounds: int
+class VerificationLog(BaseModel):
+    round_count: int
     satisfactory_model: Optional[Literal["similar", "higher"]]
     rounds: Optional[list[VerificationRound]]
     
@@ -110,8 +110,8 @@ async def handle_alternate_verification(
     ("similar", alternate_similar_tier_model, similar_model_alternate_response),
     ("higher", alternate_higher_tier_model, higher_model_alternate_response),):
         if alternate_response is not None and alternate_response.verdict == "Good":
-            verification_log = AlternateVerification(
-                rounds=alternate_verification_rounds,
+            verification_log = VerificationLog(
+                round_count=alternate_verification_rounds,
                 satisfactory_model=alternate_tier,
                 rounds=rounds
             )
