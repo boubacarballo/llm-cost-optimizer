@@ -9,6 +9,6 @@ requires-python = ">=3.13"
 [tool.uv.workspace]
 members = [
     "services/api",
-    "services/classifier",
+    "services/task-classifier",
     "services/prompt-classifier",
 ]
