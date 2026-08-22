@@ -110,12 +110,12 @@ async def verify_rewrite(prompt: str, response: str, model_config: dict) -> Rewr
         
     return result
     
-    
 
 async def handle_rewrite_verification(
     prompt,
     response,
-    model_config
+    model_config,
+    routing_context
 ):
     initial_res = await verify_rewrite(
         prompt=prompt,
@@ -127,8 +127,10 @@ async def handle_rewrite_verification(
             verification_function=verify_rewrite,
             initial_response=initial_res,
             prompt=prompt,
-            model_config=model_config
+            model_config=model_config,
+            routing_context=routing_context
         )
+    return initial_res
 
 
 if __name__ == "__main__":
