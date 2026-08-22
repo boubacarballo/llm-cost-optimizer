@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Literal, Optional
 from decimal import Decimal
+from llm_cost_optimizer.utils import TaskType
 
 
 
@@ -22,3 +23,14 @@ class VerificationResult(BaseModel):
     verdict: Literal["Good", "Bad"]
 
         
+
+class RoutingContext(BaseModel):
+    """Everything about the original request that a routing failure needs to be
+    interpretable later: the prompt itself, what the classifiers measured, and
+    which tier we ended up routing to."""
+    prompt: str
+    token_count: int
+    context_provided: bool
+    context_window: int
+    task_type: TaskType
+    task_tier: int

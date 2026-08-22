@@ -14,7 +14,7 @@ Respond with ONLY valid JSON, no markdown fences, no preamble, in exactly this s
     {{"claim": "...", "status": "SUPPORTED"}},
     {{"claim": "...", "status": "UNSUPPORTED"}}
   ],
-  "key_points": [
+  "points": [
     {{"point": "...", "status": "PRESENT"}},
     {{"point": "...", "status": "MISSING"}}
   ]
@@ -91,6 +91,188 @@ INSTRUCTIONS:
   "framing": {{"score": <1-5>, "justification": "<1-2 sentences>"}},
   "weak_ideas_to_cut": ["<idea text or index>", ...],
   "overall_score": <1-5, your holistic judgment, need not be the average>,
-  "one_line_verdict": "<single sentence summary>"
+  "verdict": "<GOOD or BAD>"
 }}
+"""
+
+EXTRACTION_JUDGE_PROMPT_TEMPLATE = """
+You are an exacting evaluator that checks whether an EXTRACTION is faithful to its source.
+Do NOT perform the extraction yourself and do NOT correct it — only evaluate what you are given.
+
+Inputs:
+- PROMPT: The extraction instructions plus the source text the values were supposed to come from.
+- EXTRACTED: The structured output a model produced from that source.
+
+Tasks (follow exactly):
+1) Ground every extracted value. For each field/value present in EXTRACTED, decide:
+   - SUPPORTED    : the value appears in, or follows directly from, the source text in PROMPT.
+   - UNSUPPORTED  : the source does not contain enough information to confirm the value, even if
+                    it sounds plausible. A value invented to fill a required field is UNSUPPORTED.
+   - CONTRADICTED : the source states something different from the extracted value.
+2) Missing items: list any field the PROMPT asked for whose value IS present in the source text but
+   is absent, empty, or null in EXTRACTED. Do NOT list fields that are genuinely absent from the
+   source — correctly reporting nothing is not a miss. May be an empty array.
+3) Format adherence: a number between 0.0 and 1.0 for how well EXTRACTED follows the output shape,
+   schema, field names, and types the PROMPT requested (higher is better). If the PROMPT specifies
+   no particular format, score 1.0.
+
+Judge substance only. Do not reward verbosity, confident tone, or extra fields nobody asked for.
+
+PROMPT:
+{prompt}
+
+EXTRACTED:
+{extracted}
+"""
+
+
+QA_JUDGE_PROMPT_TEMPLATE = """
+You are an exacting evaluator that checks whether an ANSWER correctly answers the question
+asked in a PROMPT. Do NOT answer the question yourself — only evaluate the answer given.
+
+Inputs:
+- PROMPT: The question, plus any context the asker supplied.
+- ANSWER: The answer produced by a model.
+
+Grounding rule for this evaluation:
+{grounding_rule}
+
+Tasks (follow exactly):
+1) Correctness: decide whether ANSWER is CORRECT, PARTIALLY_CORRECT, or INCORRECT.
+2) Unsupported claims: list any statement in ANSWER that the grounding rule above does not
+   permit — a fact asserted without support (may be an empty array).
+3) Missing aspects: list any part of the question that ANSWER leaves unaddressed
+   (may be an empty array).
+4) Directness: a number between 0.0 and 1.0 for how directly ANSWER responds to the question
+   actually asked. An answer that is true but evasive, padded, or answers a different question
+   scores low here even when correctness is high.
+
+Judge substance only. Length, confident tone, and formatting polish must not affect any score.
+
+PROMPT:
+{prompt}
+
+ANSWER:
+{answer}
+"""
+
+
+GENERATION_JUDGE_PROMPT_TEMPLATE = """
+You are an exacting evaluator of generated text. Do NOT rewrite or improve the text —
+only evaluate it against what the PROMPT asked for.
+
+Inputs:
+- PROMPT: The generation request, including any constraints (length, format, audience, tone).
+- GENERATED: The text a model produced.
+
+Tasks (follow exactly):
+1) Instruction adherence: a number between 0.0 and 1.0 for how completely GENERATED does what
+   the PROMPT asked.
+2) Coherence: a number between 0.0 and 1.0 for internal consistency and logical flow. Penalize
+   self-contradiction, abrupt topic drift, and repetition.
+3) Relevance: a number between 0.0 and 1.0 for how well GENERATED stays on the requested subject.
+4) Violated constraints: list any explicit constraint in the PROMPT that GENERATED breaks —
+   wrong length, wrong format, forbidden content, wrong point of view (may be an empty array).
+5) Unsupported claims: list any factual assertion presented as true that the PROMPT does not
+   support and that a careful reader would want checked (may be an empty array).
+
+Do not reward length or confident tone. Judge substance only.
+
+PROMPT:
+{prompt}
+
+GENERATED:
+{generated}
+"""
+
+
+CLASSIFICATION_JUDGE_PROMPT_TEMPLATE = """
+You are an exacting evaluator of a classification decision. Do NOT reclassify the item
+yourself as your primary task — only evaluate the label that was produced.
+
+Inputs:
+- PROMPT: The classification instructions, the label set (if one was given), and the item.
+- LABEL: The classification output a model produced.
+
+Tasks (follow exactly):
+1) Label valid: true only if LABEL is one of the labels the PROMPT allows. If the PROMPT
+   specifies no fixed label set, judge whether LABEL is a sensible category for the task and
+   set this true. Inventing a label outside a stated set is always false.
+2) Correctness: decide whether LABEL is CORRECT, AMBIGUOUS, or INCORRECT for the item.
+   Use AMBIGUOUS only when the item genuinely supports more than one label and LABEL is one
+   of the defensible choices.
+3) Format adherence: a number between 0.0 and 1.0 for how well the output matches the shape
+   the PROMPT requested (bare label vs JSON, casing, extra commentary). If the PROMPT requested
+   no particular format, score 1.0.
+4) Reasoning: one or two sentences justifying your correctness decision, citing the item.
+
+PROMPT:
+{prompt}
+
+LABEL:
+{label}
+"""
+
+
+CODE_GENERATION_JUDGE_PROMPT_TEMPLATE = """
+You are an exacting code reviewer evaluating generated code. Do NOT rewrite the code —
+only evaluate it. Assume the code will be run as-is.
+
+Inputs:
+- PROMPT: The coding request, including language, constraints, and any spec or signature.
+- CODE: The code a model produced.
+
+Tasks (follow exactly):
+1) Requirements met: decide whether CODE satisfies what the PROMPT asked: MET,
+   PARTIALLY_MET, or NOT_MET.
+2) Syntax valid: true if CODE would parse in the target language. Judge syntax only here,
+   not behavior. Truncated or obviously incomplete code is false.
+3) Issues: list concrete defects. For each, give a severity and a specific description that
+   references the actual code:
+   - CRITICAL : will not run, or is wrong for the primary case the PROMPT asked about;
+                also security holes such as injection or leaked secrets.
+   - MAJOR    : wrong on an important edge case, a real resource leak, or a missing
+                requirement the PROMPT stated explicitly.
+   - MINOR    : style, naming, a small inefficiency, a missing docstring.
+   May be an empty array. Do not invent issues to seem thorough.
+4) Format adherence: a number between 0.0 and 1.0 for whether CODE is in the requested
+   language and structure (a bare function vs a full module vs a diff), and whether it
+   respects a signature the PROMPT specified. If the PROMPT requested no particular
+   format, score 1.0.
+
+PROMPT:
+{prompt}
+
+CODE:
+{code}
+"""
+
+
+GENERIC_JUDGE_PROMPT_TEMPLATE = """
+You are an exacting evaluator of an assistant's reply. Do NOT answer the user yourself —
+only evaluate the reply given.
+
+Inputs:
+- PROMPT: What the user asked for.
+- REPLY: The reply an assistant produced.
+
+Tasks (follow exactly):
+1) Helpfulness: a number between 0.0 and 1.0 for how much the REPLY actually advances the
+   user's goal. A reply that refuses a reasonable request, or answers a question the user
+   did not ask, scores low.
+2) Correctness: a number between 0.0 and 1.0 for factual and logical accuracy of what REPLY
+   asserts. If REPLY makes no checkable claims, score 1.0.
+3) Instruction adherence: a number between 0.0 and 1.0 for how well REPLY respects explicit
+   instructions in the PROMPT — format, length, tone, things to avoid.
+4) Unsupported claims: list any factual assertion in REPLY that is presented as true but is
+   not supported by the PROMPT and that a careful reader would want checked
+   (may be an empty array).
+
+Do not reward length, confident tone, or formatting polish. Judge substance only.
+
+PROMPT:
+{prompt}
+
+REPLY:
+{reply}
 """

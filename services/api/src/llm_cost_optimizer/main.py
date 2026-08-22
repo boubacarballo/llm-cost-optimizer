@@ -11,6 +11,7 @@ import time
 import uvicorn
 from llm_cost_optimizer.database import SessionDep, create_db_and_tables
 from llm_cost_optimizer.models import RequestEvent
+from llm_cost_optimizer.types.types import RoutingContext
 from llm_cost_optimizer.verification import verify
 from arq.connections import RedisSettings
 from arq import create_pool
@@ -62,8 +63,13 @@ class ChatRequest(BaseModel):
 @app.post("/chat")
 async def chat(req: ChatRequest, session: SessionDep):
     
+    prompt_text = req.messages[-1].content
+    # rough char/4 estimate, reused for both the classifier call and the routing context
+    token_count = int(len(prompt_text) // 4)
+    context_provided = True if len(req.messages) else False
+
     params = {
-        "prompt": req.messages[-1].content,
+        "prompt": prompt_text,
     }
     response = await async_client.post(
         url=task_classifier_url,
@@ -75,10 +81,10 @@ async def chat(req: ChatRequest, session: SessionDep):
     res = await async_client.post(
         url=prompt_classifier_url,
         json={
-            "prompt": str(req.messages[-1].content),
-            "token_count": int(len(req.messages[-1].content) // 4),
-            "context_window": int(len(req.messages[-1].content) // 4),
-            "context_provided": True if len(req.messages) else False,
+            "prompt": str(prompt_text),
+            "token_count": token_count,
+            "context_window": token_count,
+            "context_provided": context_provided,
             "task_type": task_type.value,
             "device": "auto"
         }
@@ -96,7 +102,7 @@ async def chat(req: ChatRequest, session: SessionDep):
     
     model_response.cost = compute_request_cost(model_config, model_response.input_tokens, model_response.output_tokens)
     request_event = RequestEvent(
-            prompt_hash=hash_text(req.messages[-1].content),
+            prompt_hash=hash_text(prompt_text),
             model=model_config["id"],
             provider=model_config["provider"],
             cost=model_response.cost,
@@ -107,7 +113,17 @@ async def chat(req: ChatRequest, session: SessionDep):
     session.add(request_event)
     await session.commit()
     await session.refresh(request_event)
-    await redis.enqueue_job('handle_verification', task_type, req.messages[-1].content, model_response.output_text, model_config)
+
+    # everything the verification worker needs to make a routing failure interpretable
+    routing_context = RoutingContext(
+        prompt=prompt_text,
+        token_count=token_count,
+        context_provided=context_provided,
+        context_window=token_count,
+        task_type=task_type,
+        task_tier=int(data["results"]["tier"]),
+    )
+    await redis.enqueue_job('handle_verification', task_type, prompt_text, model_response.output_text, model_config, routing_context)
 
     return {
         "output_text": model_response.output_text,
