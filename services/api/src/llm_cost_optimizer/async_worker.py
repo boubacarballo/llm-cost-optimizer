@@ -27,8 +27,10 @@ async def verify_response(
         await handle_rewrite_verification(
             prompt=prompt,
             response=response,
-            judge_model_config=model_config
+            model_config=model_config
         )
+        
+    print("Verification logged")
         
     
 

@@ -3,7 +3,7 @@ from typing import Literal
 from llm_cost_optimizer.utils import config
 from llm_cost_optimizer.chat import Chat
 from pydantic import BaseModel
-from typing import Literal, Optional
+from typing import Literal, Optional, Any
 chat = Chat()
 
 async def select_alternate_model(model_config: dict, tier: Literal["similar", "higher"]):
@@ -27,8 +27,8 @@ async def select_alternate_model(model_config: dict, tier: Literal["similar", "h
     
 class VerificationRound(BaseModel):
     round: int
-    similar_res: Optional[any]
-    higher_res: Optional[any]
+    similar_res: Optional[Any] = None
+    higher_res: Optional[Any] = None
     
     
 class VerificationLog(BaseModel):
@@ -37,7 +37,7 @@ class VerificationLog(BaseModel):
     rounds: Optional[list[VerificationRound]]
     
 
-async def log_routing_failure(initial_model_config, alternate_model_config, initial_res, alternate_res, verification_log: AlternateVerification):
+async def log_routing_failure(initial_model_config, alternate_model_config, initial_res, alternate_res, verification_log: VerificationLog):
     pass
         
     

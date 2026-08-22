@@ -89,7 +89,7 @@ def get_rewrite_judge_result(judge_response: RewriteJudgeResponse) -> RewriteJud
 
 
 
-async def verify_rewrite(prompt: str, response: str, judge_model_config) -> RewriteJudgeResult:
+async def verify_rewrite(prompt: str, response: str, model_config: dict) -> RewriteJudgeResult:
 
     judge_prompt = build_rewrite_judge_prompt(
         prompt=prompt,
@@ -104,7 +104,7 @@ async def verify_rewrite(prompt: str, response: str, judge_model_config) -> Rewr
     ]
 
     # ask model to output structured JSON parsed into RewriteJudgeResponse
-    judge_response = await chat.send_request(messages, model_config=judge_model_config, responseFormat=RewriteJudgeResponse)
+    judge_response = await chat.send_request(messages, model_config=model_config, responseFormat=RewriteJudgeResponse)
 
     result = get_rewrite_judge_result(judge_response.output_text)
         
